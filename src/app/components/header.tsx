@@ -5,7 +5,7 @@ import Image from "next/image"
 export default function Header () {
   return (
     <div className={styles["header-title-wrapper"]}>
-      <Image src='/images/8cat.png' alt='プロフ画像' className={styles['my-img']} width={100} height={100}/>
+      <Image src='/my-next-app/images/8cat.png' alt='プロフ画像' className={styles['my-img']} width={100} height={100}/>
       <div className={styles['header-title']}>
         <h1>Portfolios</h1>
         <h2>製作者：MCDESIGHIN</h2>
