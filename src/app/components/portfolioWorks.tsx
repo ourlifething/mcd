@@ -1,21 +1,40 @@
+'use client'
 import styles from '@/styles/home.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import Modal from './modal';
+import { useState } from 'react'
 export default function PortfolioWorks () {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalImageSrc, setModalImageSrc] = useState<string>('');
+  const openModal = (imageSrc: string) => {
+    setModalImageSrc(imageSrc);
+    setIsModalVisible(true);
+  };
+  const closeModal = () => {
+    setIsModalVisible(false);
+  }
+  const chiaki = '/images/chiaki.jpg'
   return (
     <section className={styles['portfolios']}>
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>ちあきの黒にんにくのラベルデザイン</h3>
-          <Link href="/images/chiaki.jpg" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/chiaki.jpg" 
-              alt="ちあきの黒ニンニク"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={chiaki} 
+            alt="ちあきの黒ニンニク"
+            className={styles['images-size']}
+            width={3508}
+            height={2481}
+            onClick={() => openModal(chiaki)}
+          />
+          <Modal
+            imageSrc={chiaki}
+            width={3508}
+            height={2481}
+            isVisible={isModalVisible}
+            onClose={closeModal}
+          />
           <div className={styles['description-wrapper']}>
             <p>「ちあきファームの黒忍辱（にんにく）」、オーガニック黒にんにくのパッケージデザインがコンペにて採用されました。
               高級感を意識しつつ、海外のお客様にも好まれるような洗練されたデザインを心がけて制作いたしました。</p>

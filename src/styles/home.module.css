@@ -91,21 +91,22 @@
 .icon {
   padding-top: 8px;
   width: 50px;
+  height: auto;
 }
 .icon-ai {
   padding-top: 6px;
-  width: 43px;
-  height: 42px;
+  width: 42px;
+  height: auto;
 }
 .iconps {
   padding-top: 5px;
-  width: 40px;
-  height: 40px;
+  width:42px;
+  height: auto;
 }
 .icon-html {
   padding-top: 4px;
   width: 90px;
-  height: 65px;
+  height: auto;
 }
 
 .header-text b {
@@ -227,4 +228,47 @@
   background: #38c2c2;
   color: #f4fcfc;
   padding: 30px;
+}
+/*modal*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s ease; 
+  
+}
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s 0s ease;
+}
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.modal-image {
+  width: 900px;
+  height: auto;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
 }

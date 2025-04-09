@@ -15,10 +15,10 @@ export default function Header () {
         </p>
       </div>
       <div className={styles['icon-block']}>
-        <Image src='/images/llustrator.png' alt='イラレロゴ' className={styles['icon-ai']} width={40} height={42}/>
-        <Image src='/images/ps.png' alt='psロゴ' className={styles['iconps']} width={40} height={40}/>
-        <Image src='/images/html-css.png' alt='htmlロゴ' className={styles['icon-html']} width={90} height={65}/>
-        <Image src='/images/react.png' alt='reactロゴ' className={styles['icon']} width={50} height={48}/>
+        <Image src='/images/llustrator.png' alt='イラレロゴ' className={styles['icon-ai']} width={512} height={500} />
+        <Image src='/images/ps.png' alt='psロゴ' className={styles['iconps']} width={225} height={225}/>
+        <Image src='/images/html-css.png' alt='htmlロゴ' className={styles['icon-html']} width={792} height={612}/>
+        <Image src='/images/react.png' alt='reactロゴ' className={styles['icon']} width={1000} height={1000}/>
       </div>
     </div>
   )
