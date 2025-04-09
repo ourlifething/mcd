@@ -15,7 +15,7 @@ export default function Header () {
         </p>
       </div>
       <div className={styles['icon-block']}>
-        <Image src='/images/llustrator.png' alt='イラレロゴ' className={styles['icon-ai']} width={43} height={42}/>
+        <Image src='/images/llustrator.png' alt='イラレロゴ' className={styles['icon-ai']} width={40} height={42}/>
         <Image src='/images/ps.png' alt='psロゴ' className={styles['iconps']} width={40} height={40}/>
         <Image src='/images/html-css.png' alt='htmlロゴ' className={styles['icon-html']} width={90} height={65}/>
         <Image src='/images/react.png' alt='reactロゴ' className={styles['icon']} width={50} height={48}/>
