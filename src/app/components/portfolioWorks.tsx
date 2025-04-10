@@ -17,15 +17,22 @@ export default function PortfolioWorks () {
   };
   const closeModal = () => {
     setIsModalVisible(false);
+    setModalImageSrc('')
   }
   const garlic = {img:'/images/chiaki.jpg', w:3508, h:2481};
   const lettuce = {img:'/images/mj.png', w:2514, h:1746};
   const lettucePop = {img:'/images/mizulettuce.png', w:2272, h:1548};
-  const lettucePopWide = {img:'images/mizulettucewide.png', w:2274, h:798};
-  const fuji = {img:'images/shirofujipr.png', w:2397, h:1465};
-  const greenWalker = {img:'images/gw.png', w:2393, h:1461};
-  const rita = {img:'images/ritapr.png', w:2396, h:1459};
-  const akn = { img:'images/aknpr.png', w:2396 , h:1461 }
+  const lettucePopWide = {img:'/images/mizulettucewide.png', w:2274, h:798};
+  const fuji = {img:'/images/shirofujipr.png', w:2397, h:1465};
+  const greenWalker = {img:'/images/gw.png', w:2393, h:1461};
+  const rita = {img:'/images/ritapr.png', w:2396, h:1459};
+  const akn = { img:'/images/aknpr.png', w:2396 , h:1461 }
+  const junk = { img:'/images/junka.png', w:2250 , h:1459 }
+  const treat = { img:'/images/dtreat.png', w:2335 , h:1459 }
+  const clAndK = { img:'/images/clandkrush.png', w:2276 , h:1552 }
+  const bAndM = { img:'/images/bakumurofivedeez.png', w:2275 , h:1553 }
+  const myMy = { img:'/images/mymy.png', w:2267 , h:1594 }
+  const osaka = { img:'/images/osakacollection.png', w:588 , h:441 }
   return (
     <section className={styles['portfolios']}>
       <div className={styles['pict-block-wrapper']}>
@@ -37,6 +44,7 @@ export default function PortfolioWorks () {
             className={styles['images-size']}
             width={garlic.w}
             height={garlic.h}
+            priority
             onClick={() => openModal(garlic.img, garlic.w, garlic.h)}
           />
           <div className={styles['description-wrapper']}>
@@ -52,6 +60,7 @@ export default function PortfolioWorks () {
             className={styles['images-size']}
             width={lettuce.w}
             height={lettuce.h}
+            priority
             onClick={() => openModal(lettuce.img,lettuce.w,lettuce.h)}
           />
           <div className={styles['description-wrapper']}>
@@ -164,15 +173,14 @@ export default function PortfolioWorks () {
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>メキシカンレストランJunkadelicステッカー、ポスター</h3>
-          <Link href="/images/junka.png" target="_blank" prefetch={false}>
-            <Image
-              src="/images/junka.png" 
-              alt="ジャンカデリック"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image
+            src={junk.img}
+            alt="ジャンカデリック"
+            className={styles['images-size']}
+            width={junk.w}
+            height={junk.h}
+            onClick={() => openModal(junk.img, junk.w, junk.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>メキシカンレストラン「ジャンカデリック」のポスター、ステッカー、メニューなど各種デザインを担当いたしました。
               また、10周年の記念ノベルティとして、オリジナルデザインの手拭いやステッカーも制作いたしました。
@@ -181,15 +189,14 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block']}>
           <h3>D.treatのパッケージデザイン</h3>
-          <Link href="/images/dtreat.png" target="_blank" prefetch={false}>
-            <Image
-              src="/images/dtreat.png" 
-              alt="D.treat"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image
+            src={treat.img}
+            alt="D.treat"
+            className={styles['images-size']}
+            width={treat.w}
+            height={treat.h}
+            onClick={() => openModal(treat.img, treat.w, treat.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>D.TREAT オールインワン メンズ美容液のパッケージデザインを制作いたしました。
               シンプルで清潔感のあるデザインを心がけ、男性向けスキンケア商品としての上質さや信頼感が伝わるよう意識して仕上げております。</p>
@@ -199,15 +206,14 @@ export default function PortfolioWorks () {
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>Flyer & Poster</h3>
-          <Link href="/images/clandkrush.png" target="_blank" prefetch={false}>
-            <Image
-              src="/images/clandkrush.png" 
-              alt="poster"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image
+            src={clAndK.img} 
+            alt="poster"
+            className={styles['images-size']}
+            width={clAndK.w}
+            height={clAndK.h}
+            onClick={() => openModal(clAndK.img, clAndK.w, clAndK.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作いたしました。
               Photoshopを使用して画像を加工し、ペンキ画像を取り込んでレイヤーを分けて配置。さらに、Illustratorでロゴを重ねるなどしてデザインを完成させました。
@@ -216,15 +222,14 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block']}>
           <h3>Flyer & Poster</h3>
-          <Link href="/images/bakumurofivedeez.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/bakumurofivedeez.png" 
-              alt="D.treat"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={bAndM.img}
+            alt="D.treat"
+            className={styles['images-size']}
+            width={bAndM.w}
+            height={bAndM.h}
+            onClick={() => openModal(bAndM.img, bAndM.w, bAndM.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作しました。
               Photoshopを使用して人物をトレースする際、境目が不自然にならないよう細心の注意を払いながら作成しました。</p>
@@ -234,15 +239,14 @@ export default function PortfolioWorks () {
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>Flyer & Poster</h3>
-          <Link href="/images/mymy.png" target="_blank" prefetch={false}>
-            <Image
-              src="/images/mymy.png" 
-              alt="poster"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image
+            src={myMy.img}
+            alt="poster"
+            className={styles['images-size']}
+            width={myMy.w}
+            height={myMy.h}
+            onClick={() => openModal(myMy.img, myMy.w, myMy.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>代官山UNITでのイベントフライヤーおよびポスターを制作しました。
               人物をトレースする際、不自然にならないように細心の注意を払い、背景に迷彩柄を加えることで奥行きを持たせるなど、デザインに工夫を凝らしました。</p>
@@ -250,15 +254,14 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block']}>
           <h3>Flyer & Poster</h3>
-          <Link href="/images/osakacollection.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/osakacollection.png" 
-              alt="D.treat"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={osaka.img} 
+            alt="D.treat"
+            className={styles['images-size']}
+            width={osaka.w}
+            height={osaka.h}
+            onClick={() => openModal(osaka.img, osaka.w, osaka.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>大阪インポートコレクションのフライヤーおよびポスターを制作しました。
               靴の画像を複数集め、配色を変更してポップなイメージを演出するよう工夫しました。</p>
