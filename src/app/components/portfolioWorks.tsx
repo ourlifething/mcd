@@ -7,33 +7,37 @@ import { useState } from 'react'
 export default function PortfolioWorks () {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState<string>('');
-  const openModal = (imageSrc: string) => {
+  const [modalWidth, setModalWidth] = useState<number>(0);
+  const [modalHeight, setModalHeight] = useState<number>(0);
+  const openModal = (imageSrc: string, width:number, height:number) => {
     setModalImageSrc(imageSrc);
+    setModalWidth(width);
+    setModalHeight(height);
     setIsModalVisible(true);
   };
   const closeModal = () => {
     setIsModalVisible(false);
   }
-  const chiaki = '/images/chiaki.jpg'
+  const garlic = {img:'/images/chiaki.jpg', w:3508, h:2481};
+  const lettuce = {img:'/images/mj.png', w:2514, h:1746};
+  const lettucePop = {img:'/images/mizulettuce.png', w:2272, h:1548};
+  const lettucePopWide = {img:'images/mizulettucewide.png', w:2274, h:798};
+  const fuji = {img:'images/shirofujipr.png', w:2397, h:1465};
+  const greenWalker = {img:'images/gw.png', w:2393, h:1461};
+  const rita = {img:'images/ritapr.png', w:2396, h:1459};
+  const akn = { img:'images/aknpr.png', w:2396 , h:1461 }
   return (
     <section className={styles['portfolios']}>
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>ちあきの黒にんにくのラベルデザイン</h3>
           <Image 
-            src={chiaki} 
+            src={garlic.img} 
             alt="ちあきの黒ニンニク"
             className={styles['images-size']}
-            width={3508}
-            height={2481}
-            onClick={() => openModal(chiaki)}
-          />
-          <Modal
-            imageSrc={chiaki}
-            width={3508}
-            height={2481}
-            isVisible={isModalVisible}
-            onClose={closeModal}
+            width={garlic.w}
+            height={garlic.h}
+            onClick={() => openModal(garlic.img, garlic.w, garlic.h)}
           />
           <div className={styles['description-wrapper']}>
             <p>「ちあきファームの黒忍辱（にんにく）」、オーガニック黒にんにくのパッケージデザインがコンペにて採用されました。
@@ -42,15 +46,14 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block']}>
           <h3>水レタスのラベルデザイン</h3>
-          <Link href="/images/mj.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/mj.png" 
-              alt="水レタス"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={lettuce.img}
+            alt="水レタス"
+            className={styles['images-size']}
+            width={lettuce.w}
+            height={lettuce.h}
+            onClick={() => openModal(lettuce.img,lettuce.w,lettuce.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>水耕栽培で育てられた「水レタス」のラベルデザインを制作いたしました。
               葉先が丸く、やわらかな食感が特徴で、太陽光を活用したハウスで丁寧に栽培されています。
@@ -62,15 +65,14 @@ export default function PortfolioWorks () {
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>水レタスの販売促進用店頭ポップ</h3>
-          <Link href="/images/mizulettuce.png" target="_blank" prefetch={false}>
-            <Image
-              src="/images/mizulettuce.png" 
-              alt="水レタスポップ"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image
+            src={lettucePop.img}
+            alt="水レタスポップ"
+            className={styles['images-size']}
+            width={lettucePop.w}
+            height={lettucePop.h}
+            onClick={() => openModal(lettucePop.img, lettucePop.w, lettucePop.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>店舗での掲示用として商品POPを制作いたしました。
               また、こちらは商品の提案時にも使用し、視覚的にわかりやすく魅力を伝えるツールとして活用いたしました。</p>
@@ -78,15 +80,14 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block']}>
           <h3>水レタスの販売促進用店頭ポップ（横長）</h3>
-          <Link href="/images/mizulettucewide.png" target="_blank" prefetch={false}>
-            <Image
-              src="/images/mizulettucewide.png" 
-              alt="水レタス"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image
+            src={lettucePopWide.img}
+            alt="水レタス"
+            className={styles['images-size']}
+            width={lettucePopWide.w}
+            height={lettucePopWide.h}
+            onClick={() => openModal(lettucePopWide.img, lettucePopWide.w, lettucePopWide.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>店舗で使用する商品POPを制作いたしました。
               陳列スペースが冷ケースであることを想定し、値札の横に配置できるよう横長のレイアウトでデザインいたしました。</p>
@@ -96,15 +97,14 @@ export default function PortfolioWorks () {
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>白富士マーケットのロゴデザイン提案</h3>
-          <Link href="/images/shirofujipr.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/shirofujipr.png" 
-              alt="白富士マーケット提案"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={fuji.img} 
+            alt="白富士マーケット提案"
+            className={styles['images-size']}
+            width={fuji.w}
+            height={fuji.h}
+            onClick={() => openModal(fuji.img, fuji.w, fuji.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>ターゲット層がネット販売を利用する方々であり、主に家電やスマートフォンを取り扱う点を踏まえ、「白富士」「富士山」「日本一」「家電」「先進的」「電脳」「商店」「マーケット」「お客様に届ける」といったキーワードを軸にロゴを提案いたしました。
               お店のイメージカラーである「白と青」は、白富士のイメージから着想を得ており、清潔感・信頼感・先進性を表現しています。視認性と印象に残るデザインを意識し、親しみやすさと未来感を兼ね備えたロゴに仕上げました。</p>
@@ -112,15 +112,14 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block']}>
           <h3>Green Walker ロゴデザイン提案</h3>
-          <Link href="/images/gw.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/gw.png" 
-              alt="グリーンワーカーロゴ"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={greenWalker.img}
+            alt="グリーンワーカーロゴ"
+            className={styles['images-size']}
+            width={greenWalker.w}
+            height={greenWalker.h}
+            onClick={() => openModal(greenWalker.img, greenWalker.w, greenWalker.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>登山やキャンプなどのアウトドア用品を取り扱うブランド「GreenWalker（グリーンウォーカー）」のロゴデザインを提案いたしました。
               ロゴは、ブランド名の文字列とシンボルマークを組み合わせた構成で、商品パッケージやウェブサイトなど幅広い用途での使用を想定して制作しております。
@@ -132,30 +131,28 @@ export default function PortfolioWorks () {
       <div className={styles['pict-block-wrapper']}>
         <div className={styles['pict-block']}>
           <h3>RITAのグラフィック</h3>
-          <Link href="/images/ritapr.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/ritapr.png" 
-              alt="リタ"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={rita.img}
+            alt="リタ"
+            className={styles['images-size']}
+            width={rita.w}
+            height={rita.h}
+            onClick={() => openModal(rita.img, rita.w, rita.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>30代〜40代をターゲットとした大人なカジュアルを提案するブランド、<Link href="https://www.instagram.com/rita_jeans_tokyo/?hl=ja" target="_blank" prefetch={false}>RITA</Link>の2024年以前までのグラッフィックを全て制作しておりました。</p>
           </div>
         </div>
         <div className={styles['pict-block']}>
           <h3>高柳明音さんコラボ</h3>
-          <Link href="/images/aknpr.png" target="_blank" prefetch={false}>
-            <Image 
-              src="/images/aknpr.png" 
-              alt="高柳明音さん"
-              className={styles['images-size']}
-              width={600}
-              height={400}
-            />
-          </Link>
+          <Image 
+            src={akn.img} 
+            alt="高柳明音さん"
+            className={styles['images-size']}
+            width={akn.w}
+            height={akn.h}
+            onClick={() => openModal(akn.img, akn.w, akn.h)}
+          />
           <div className={styles['description-wrapper']}>
             <p>元SKE48の高柳明音さんとRITAのコラボレーションによるTシャツおよびジャケットのグラフィックデザインを担当いたしました。
               ジャケットのバックプリントは「ゲーム」をテーマに、遊び心とクールさを兼ね備えたデザインに仕上げています。
@@ -268,6 +265,13 @@ export default function PortfolioWorks () {
           </div>
         </div>
       </div>
+      <Modal
+        imageSrc={modalImageSrc}
+        width={modalWidth}
+        height={modalHeight}
+        isVisible={isModalVisible}
+        onClose={closeModal}
+      />
     </section>
   );
 };

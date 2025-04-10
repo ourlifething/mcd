@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "@/styles/home.module.css"
 import { useEffect } from "react";
+import { FaXmark } from "react-icons/fa6";
 
 interface ModalProps {
   imageSrc: string;
@@ -25,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, isVisible, onClose, width, heig
   return (
     <div className={`${styles['modal-overlay']} ${isVisible ? styles['show'] : ''}`} onClick={onClose}>
       <div className={styles['modal-content']} onClick={(e)=>e.stopPropagation()}>
-        <button className={styles['close-btn']} onClick={onClose}>閉じる</button>
+        <button className={styles['close-btn']} onClick={onClose}><FaXmark style={{ width:'25px', height:'auto' }}/></button>
         <Image
           src={imageSrc}
           alt="modal image"
