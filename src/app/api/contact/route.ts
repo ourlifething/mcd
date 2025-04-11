@@ -31,7 +31,12 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
     const { name, email, message } = data;
-    console.log('logout====',name,email,message)
+    // 環境変数をログ出力
+    console.log('環境変数 EMAIL_USER:', process.env.EMAIL_USER);
+    console.log('環境変数 EMAIL_PASS:', process.env.EMAIL_PASS);
+
+    // リクエストから取得したデータをログに出力
+    console.log('ログ出力: name:', name, 'email:', email, 'message:', message);
 
     // Nodemailerの設定
     const transporter = nodemailer.createTransport({
