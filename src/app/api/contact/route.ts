@@ -31,6 +31,7 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
     const { name, email, message } = data;
+    console.log('logout====',name,email,message)
 
     // Nodemailerの設定
     const transporter = nodemailer.createTransport({
