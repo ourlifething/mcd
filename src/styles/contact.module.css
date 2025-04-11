@@ -8,6 +8,12 @@
   background: #f4fcfc;
   position: relative;
 }
+.contact-title {
+  color: #38c2c2;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding-bottom: 16px;
+}
 .contact-form {
   display: flex;
   width: 100%;
@@ -52,7 +58,7 @@
   }
 }
 .label {
-  font-size: 16px;
+  font-size: 14px;
   min-width: 150px;
 }
 .submit {

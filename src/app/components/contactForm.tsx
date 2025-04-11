@@ -66,6 +66,7 @@ const ContactForm = () => {
   }, [status]);
   return (
     <div className={styles['contact-form-root']}>
+      <p className={styles['contact-title']}>CONTACT</p>
       <form 
         className={styles['contact-form']}
         onSubmit={handleSubmit(onSubmit)}>

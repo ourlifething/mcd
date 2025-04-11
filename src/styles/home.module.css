@@ -72,6 +72,9 @@
   }
 }
 
+.portfolios {
+  padding-top: 50px;
+}
 .icon-block {
   padding-left: 2%;
   display: flex;
@@ -157,6 +160,8 @@
   display: flex;
   column-gap: 30px;
   padding: 0 2%;
+  max-width:1080px;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -166,8 +171,14 @@
 }
 
 .pict-block-wrapper h3 {
-  color: #38c2c2;
+  margin: 0 auto 0 0;
+  margin-bottom: 10px;
+  color:#f4fcfc;
+  background: #38c2c2;
+  padding: 8px 30px;
   font-weight: 700;
+  border-radius: 20px;
+  letter-spacing: 2px;
 }
 
 .pict-block {
@@ -175,11 +186,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 65%;
+  width: 40vw;
   padding: 20px 0 30px;
   margin: 0 auto;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(50px);
   animation: fadeInUp 0.8s ease-out forwards;
 }
 @keyframes fadeInUp {
@@ -193,12 +204,6 @@
   .pict-block {
     width: 90%;
   }
-}
-
-.pict-block h3 {
-  width: 95%;
-  padding: 20px 20px;
-  background-color: #f4fcfc;
 }
 
 .description-wrapper {

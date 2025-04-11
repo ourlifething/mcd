@@ -39,7 +39,7 @@ export default function PortfolioWorks () {
       <section className={styles['portfolios']}>
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>ちあきの黒にんにくのラベルデザイン</h3>
+            <h3>Label</h3>
             <Image 
               src={garlic.img} 
               alt="ちあきの黒ニンニク"
@@ -55,7 +55,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>水レタスのラベルデザイン</h3>
+            <h3>Label</h3>
             <Image 
               src={lettuce.img}
               alt="水レタス"
@@ -75,7 +75,7 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>水レタスの販売促進用店頭ポップ</h3>
+            <h3>Pop</h3>
             <Image
               src={lettucePop.img}
               alt="水レタスポップ"
@@ -90,7 +90,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>水レタスの販売促進用店頭ポップ（横長）</h3>
+            <h3>Pop</h3>
             <Image
               src={lettucePopWide.img}
               alt="水レタス"
@@ -107,7 +107,7 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>白富士マーケットのロゴデザイン提案</h3>
+            <h3>Logo</h3>
             <Image 
               src={fuji.img} 
               alt="白富士マーケット提案"
@@ -117,12 +117,12 @@ export default function PortfolioWorks () {
               onClick={() => openModal(fuji.img, fuji.w, fuji.h)}
             />
             <div className={styles['description-wrapper']}>
-              <p>ターゲット層がネット販売を利用する方々であり、主に家電やスマートフォンを取り扱う点を踏まえ、「白富士」「富士山」「日本一」「家電」「先進的」「電脳」「商店」「マーケット」「お客様に届ける」といったキーワードを軸にロゴを提案いたしました。
+              <p>白富士マーケットのロゴデザイン提案:ターゲット層がネット販売を利用する方々であり、主に家電やスマートフォンを取り扱う点を踏まえ、「白富士」「富士山」「日本一」「家電」「先進的」「電脳」「商店」「マーケット」「お客様に届ける」といったキーワードを軸にロゴを提案いたしました。
                 お店のイメージカラーである「白と青」は、白富士のイメージから着想を得ており、清潔感・信頼感・先進性を表現しています。視認性と印象に残るデザインを意識し、親しみやすさと未来感を兼ね備えたロゴに仕上げました。</p>
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>Green Walker ロゴデザイン提案</h3>
+            <h3>Logo</h3>
             <Image 
               src={greenWalker.img}
               alt="グリーンワーカーロゴ"
@@ -132,7 +132,7 @@ export default function PortfolioWorks () {
               onClick={() => openModal(greenWalker.img, greenWalker.w, greenWalker.h)}
             />
             <div className={styles['description-wrapper']}>
-              <p>登山やキャンプなどのアウトドア用品を取り扱うブランド「GreenWalker（グリーンウォーカー）」のロゴデザインを提案いたしました。
+              <p>Green Walker ロゴデザイン提案:登山やキャンプなどのアウトドア用品を取り扱うブランド「GreenWalker（グリーンウォーカー）」のロゴデザインを提案いたしました。
                 ロゴは、ブランド名の文字列とシンボルマークを組み合わせた構成で、商品パッケージやウェブサイトなど幅広い用途での使用を想定して制作しております。
                 自然との共生や、歩みを進める楽しさ・力強さを感じさせるデザインを意識し、アウトドアブランドとしての信頼感と親しみやすさを表現しました。
               </p>
@@ -141,7 +141,7 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>RITAのグラフィック</h3>
+            <h3>Graphic</h3>
             <Image 
               src={rita.img}
               alt="リタ"
@@ -155,7 +155,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>高柳明音さんコラボ</h3>
+            <h3>Graphic</h3>
             <Image 
               src={akn.img} 
               alt="高柳明音さん"
@@ -174,7 +174,7 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>メキシカンレストランJunkadelicステッカー、ポスター</h3>
+            <h3>Sticker Poster</h3>
             <Image
               src={junk.img}
               alt="ジャンカデリック"
@@ -190,7 +190,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>D.treatのパッケージデザイン</h3>
+            <h3>Package</h3>
             <Image
               src={treat.img}
               alt="D.treat"
