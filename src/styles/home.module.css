@@ -134,7 +134,6 @@
   background: #fff;
 }
 
-
 .header-title h1,
 .header-title h2 {
   color: #38c2c2;
@@ -181,6 +180,10 @@
   letter-spacing: 2px;
 }
 
+.rita-link {
+  text-decoration: underline;
+  color: #38c2c2;
+}
 .pict-block {
   display: flex;
   flex-direction: column;

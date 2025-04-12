@@ -156,7 +156,16 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
-              <p>30代〜40代をターゲットとした大人なカジュアルを提案するブランド、<Link href="https://www.instagram.com/rita_jeans_tokyo/?hl=ja" target="_blank" prefetch={false}>RITA</Link>の2024年以前までのグラッフィックを全て制作しておりました。</p>
+              <p>30代〜40代をターゲットとした大人なカジュアルを提案するブランド、
+                <Link
+                  className={styles['rita-link']}
+                  href="https://www.instagram.com/rita_jeans_tokyo/?hl=ja" 
+                  target="_blank" 
+                  prefetch={false}
+                >
+                  RITA
+                </Link>
+                の2024年以前までのグラッフィックを全て制作しておりました。</p>
             </div>
           </div>
           <div className={styles['pict-block']}>
