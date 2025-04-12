@@ -29,7 +29,7 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, isVisible, onClose, width, heig
             className={styles['modal-image']}
             width={width}
             height={height}
-            unoptimized
+            priority
           />
         ):(<></>)
         }

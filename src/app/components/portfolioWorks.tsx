@@ -83,6 +83,7 @@ export default function PortfolioWorks () {
               width={lettucePop.w}
               height={lettucePop.h}
               onClick={() => openModal(lettucePop.img, lettucePop.w, lettucePop.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>店舗での掲示用として商品POPを制作いたしました。
@@ -98,6 +99,7 @@ export default function PortfolioWorks () {
               width={lettucePopWide.w}
               height={lettucePopWide.h}
               onClick={() => openModal(lettucePopWide.img, lettucePopWide.w, lettucePopWide.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>店舗で使用する商品POPを制作いたしました。
@@ -115,6 +117,7 @@ export default function PortfolioWorks () {
               width={fuji.w}
               height={fuji.h}
               onClick={() => openModal(fuji.img, fuji.w, fuji.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>白富士マーケットのロゴデザイン提案:ターゲット層がネット販売を利用する方々であり、主に家電やスマートフォンを取り扱う点を踏まえ、「白富士」「富士山」「日本一」「家電」「先進的」「電脳」「商店」「マーケット」「お客様に届ける」といったキーワードを軸にロゴを提案いたしました。
@@ -130,6 +133,7 @@ export default function PortfolioWorks () {
               width={greenWalker.w}
               height={greenWalker.h}
               onClick={() => openModal(greenWalker.img, greenWalker.w, greenWalker.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>Green Walker ロゴデザイン提案:登山やキャンプなどのアウトドア用品を取り扱うブランド「GreenWalker（グリーンウォーカー）」のロゴデザインを提案いたしました。
@@ -149,6 +153,7 @@ export default function PortfolioWorks () {
               width={rita.w}
               height={rita.h}
               onClick={() => openModal(rita.img, rita.w, rita.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>30代〜40代をターゲットとした大人なカジュアルを提案するブランド、<Link href="https://www.instagram.com/rita_jeans_tokyo/?hl=ja" target="_blank" prefetch={false}>RITA</Link>の2024年以前までのグラッフィックを全て制作しておりました。</p>
@@ -163,6 +168,7 @@ export default function PortfolioWorks () {
               width={akn.w}
               height={akn.h}
               onClick={() => openModal(akn.img, akn.w, akn.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>元SKE48の高柳明音さんとRITAのコラボレーションによるTシャツおよびジャケットのグラフィックデザインを担当いたしました。
@@ -182,6 +188,7 @@ export default function PortfolioWorks () {
               width={junk.w}
               height={junk.h}
               onClick={() => openModal(junk.img, junk.w, junk.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>メキシカンレストラン「ジャンカデリック」のポスター、ステッカー、メニューなど各種デザインを担当いたしました。
@@ -198,6 +205,7 @@ export default function PortfolioWorks () {
               width={treat.w}
               height={treat.h}
               onClick={() => openModal(treat.img, treat.w, treat.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>D.TREAT オールインワン メンズ美容液のパッケージデザインを制作いたしました。
@@ -215,6 +223,7 @@ export default function PortfolioWorks () {
               width={clAndK.w}
               height={clAndK.h}
               onClick={() => openModal(clAndK.img, clAndK.w, clAndK.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作いたしました。
@@ -231,6 +240,7 @@ export default function PortfolioWorks () {
               width={bAndM.w}
               height={bAndM.h}
               onClick={() => openModal(bAndM.img, bAndM.w, bAndM.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作しました。
@@ -248,6 +258,7 @@ export default function PortfolioWorks () {
               width={myMy.w}
               height={myMy.h}
               onClick={() => openModal(myMy.img, myMy.w, myMy.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>代官山UNITでのイベントフライヤーおよびポスターを制作しました。
@@ -263,6 +274,7 @@ export default function PortfolioWorks () {
               width={osaka.w}
               height={osaka.h}
               onClick={() => openModal(osaka.img, osaka.w, osaka.h)}
+              loading='lazy'
             />
             <div className={styles['description-wrapper']}>
               <p>大阪インポートコレクションのフライヤーおよびポスターを制作しました。
