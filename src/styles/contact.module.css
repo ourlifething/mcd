@@ -72,6 +72,11 @@
   font-size: 14px;
   letter-spacing: 6px;
 }
+.submit:hover {
+  background: #38c2c2;
+  transition: 0.2s;
+  color: #f4fcfc;
+}
 @media screen and (max-width: 768px){
   .label {
     font-size: 12px;
@@ -84,6 +89,10 @@
     margin: 0px 0 16px;
     background-color: #38c2c2;
     color: #fff;
+  }
+  .submit:hover {
+    opacity: 0.8;
+    transition: 0.3s;
   }
 }
 .status-message {
