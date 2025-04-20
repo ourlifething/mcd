@@ -8,7 +8,7 @@ export default function Header () {
       <Image src='/images/8cat.png' alt='プロフ画像' className={styles['my-img']} width={100} height={100}/>
       <div className={styles['header-title']}>
         <h1>Portfolios</h1>
-        <h2>製作者：MCGDESIGN</h2>
+        <h2>製作者：葉山　竜二</h2>
         <p className={styles['mail-add']}>
           連絡先：
           <a href="mailto:vervewearage@gmail.com" target="_blank" rel="noopener noreferrer">vervewearage@gmail.com</a>
