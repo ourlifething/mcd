@@ -110,3 +110,9 @@
 .status-message.hidden {
   opacity: 0;
 }
+.contact-form-text {
+  font-size: 14px;
+  color:#38c2c2;
+  padding:8px 2% 20px;
+  max-width: 800px;
+}

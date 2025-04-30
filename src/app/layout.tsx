@@ -8,7 +8,9 @@ export default function RootLayout({
     <html lang="jp">
       <body>
         <Header />
-        {children}
+         <main>
+          {children}
+         </main>
         <Footer />
       </body>
     </html>

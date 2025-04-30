@@ -98,13 +98,14 @@
 }
 .icon-ai {
   padding-top: 6px;
-  width: 42px;
+  width: 72px;
   height: auto;
 }
 .iconps {
   padding-top: 5px;
   width:42px;
   height: auto;
+  margin-right: 8px;
 }
 .icon-html {
   padding-top: 4px;
@@ -308,4 +309,11 @@
 .contact-form {
   width: 100%;
   display: flex;
+}
+/* Banner */
+.banners {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  background: #fff;
 }

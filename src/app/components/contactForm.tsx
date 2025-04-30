@@ -67,6 +67,8 @@ const ContactForm = () => {
   return (
     <div className={styles['contact-form-root']}>
       <p className={styles['contact-title']}>CONTACT</p>
+      <p className={styles['contact-form-text']}>ポートフォリオをご覧いただいたご感想やご意見、ご指摘などがありましたら、メッセージ欄にお気軽にご記入いただけると嬉しいです。今後の参考にさせていただきますので、どうぞよろしくお願いします。
+      </p>
       <form 
         className={styles['contact-form']}
         onSubmit={handleSubmit(onSubmit)}>
