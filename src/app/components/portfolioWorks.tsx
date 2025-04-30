@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Modal from './modal';
 import { useState } from 'react'
 import ContactForm from './contactForm';
+import Banner from "@/app/components/banners";
 export default function PortfolioWorks () {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState<string>('');
@@ -298,6 +299,9 @@ export default function PortfolioWorks () {
           isVisible={isModalVisible}
           onClose={closeModal}
         />
+      </section>
+      <section className={styles['banners']}>
+        <Banner/>
       </section>
       <section className={styles['contact-form']}>
         <ContactForm/>
