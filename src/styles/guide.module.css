@@ -1,0 +1,129 @@
+.guide_root {
+  display: flex;
+  flex-direction: column;
+  background: #E6E2D3;
+  height: 100%;
+  width: 100%;
+}
+.guide_h2 {
+  padding: 8px 2%;
+  font-weight: 700;
+  background: #1B3A4B;
+  color: #fff;
+  letter-spacing: 1.6px;
+}
+@media screen and (max-width:768px){
+  .guide_h2 {
+    font-size: 16px;
+  } 
+}
+.guide_description {
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  padding: 32px 2% 16px;
+  font-size: 16px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+@media screen and (max-width: 768px){
+  .guide_description {
+    font-size: 14px;
+  }
+  
+}
+.guide_block {
+  width: 96%;
+  max-width: 1180px;
+  height: 96%;
+  margin: 2% auto;
+  background: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+}
+
+.guide_container {
+  padding: 40px 2%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 100px;
+}
+.guide_station_wrapper {
+  display: flex;
+  justify-content: center;
+  column-gap: 40px;
+  row-gap: 16px;
+}
+.guide_station_wrapper_odd {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  column-gap: 40px;
+  row-gap: 16px;
+}
+.guide_station_description {
+  max-width: 547px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+@media screen and (max-width:768px){
+  .guide_station_wrapper {
+    flex-direction: column-reverse;
+    column-gap: 24px;
+    align-items: center;
+  }
+  .guide_station_wrapper_odd {
+    flex-direction: column-reverse;
+    column-gap: 24px;
+    align-items: center;
+  }
+  .guide_station_description {
+    max-width: 350px;
+  }
+}
+.guide_link {
+  display: flex;
+  padding: 8px;
+  border-radius: 8px;
+  background: #38C2C2;
+  width: 70%;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.guide_link:hover {
+  opacity: 0.8;
+  transition: 0.3s;
+}
+@media screen and (max-width: 768px){
+  .guide_link {
+    width: 100%;
+  }
+}
+.guide_station_title_block {
+  display: flex;
+  column-gap: 16px;
+  font-weight: 700;
+}
+.guide_station_image {
+  object-fit: cover;
+  max-width: 350px;
+  height: 100%;
+}
+@media screen and (max-width:768px) {
+  .guide_station_image {
+    max-width: 350px;
+  }
+}
+.station_image_block {
+  position: relative;
+}
+.station_image_title {
+  position: absolute;
+  letter-spacing: 1.3px;
+  top: 0;
+  left: 0;
+  padding: 8px 40px;
+  background: #1B3A4B;
+  color: #fff;
+}
