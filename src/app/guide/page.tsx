@@ -13,7 +13,7 @@ export default function Guide () {
 
   return (
     <div className={styles['guide_root']}>
-      <h2 className={styles['guide_h2']}>目黒　武蔵小山　西小山ローカルガイド</h2>
+      <h2 className={styles['guide_h2']}>目黒　不動前　武蔵小山　西小山ローカルガイド</h2>
       <p className={styles['guide_description']}>目黒、不動前、武蔵小山、西小山には魅力的なスポットがたくさん。おすすめのレストランや商店を訪れて、街の新たな魅力を発見しよう！</p>
       <nav className='bread'>
         <Link 
