@@ -16,3 +16,21 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
   );
   return NextResponse.json({ message: '更新完了', result });
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const Client = await clientPromise;
+    const db = Client.db('portfolioDB')
+
+    const result = await db.collection('stations').deleteOne({
+      _id: new ObjectId(params.id),
+    });
+
+    if ( result.deletedCount === 0 ) {
+      return NextResponse.json({ error: 'データが見つかりません' }, { status: 404 })
+    }
+    return NextResponse.json({ message: '削除成功' });
+  } catch (error) {
+    return NextResponse.json({ error: 'サーバーエラー' }, {status: 500});
+  }
+}
