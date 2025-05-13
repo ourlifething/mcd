@@ -21,13 +21,3 @@ export async function GET () {
   const data = await collection.find({}).toArray();
   return NextResponse.json(data);
 }
-
-export async function DELETE (request: NextRequest, { params }: { params: { id: string }}) {
-  const client = await clientPromise;
-  const db = client.db('portfolioDB');
-  const collection = db.collection('stations');
-
-  const result = await collection.deleteOne({ _id: new ObjectId(params.id) })
-  
-  return NextResponse.json({ message: '削除完了', result })
-}
