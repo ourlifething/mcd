@@ -14,7 +14,10 @@ type Stations = {
   name: string;
   text: string;
 }
-export default function StationForm () {
+type Props = {
+  stationName: string;
+}
+export default function StationForm ({ stationName }: Props) {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -34,14 +37,21 @@ export default function StationForm () {
 
   return (
     <>
-      <button onClick={()=> setIsInputModal(true)}>入力</button>
-      <InputModal
-        isOpen={isInputModal}
-        onClose={()=> setIsInputModal(false)}
-      />
+      <div className={styles['station_wrapper']}>
+        <button 
+          onClick={()=> setIsInputModal(true)}
+          className={styles['station_input_btn']}
+        >
+            訪問情報を入力する
+        </button>
+        <InputModal
+          isOpen={isInputModal}
+          onClose={()=> setIsInputModal(false)}
+        />
+        <h2 className={styles['station_title']}>{stationName}のおすすめ</h2>
+      </div>
 
       <section>
-        <h2>目黒駅のおすすめ</h2>
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -49,17 +59,24 @@ export default function StationForm () {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className={styles['motion-div']}
         >
-          <ul>
+          <ul className={styles['station_list']}>
             {lists.map((list) => (
-              <li key={list._id }>
-                {list.name} {list.text}
-                <button onClick={()=> {
-                  setCurrentEdit(list)
-                  setIsModalOpen(true)
-                }}>
+              <li 
+                key={list._id }
+                className={styles['station_list_block']}
+              >
+                <div className={styles['station_list_name']}>
+                  {list.name}
+                </div>
+                <div className={styles['station_list_text']}>
+                  {list.text}
+                </div>
+                <button 
+                  onClick={()=> { setCurrentEdit(list), setIsModalOpen(true) }}
+                  className={styles['station_edit_button']}
+                >
                   編集
                 </button>
-                
               </li>
             ))}
             {/** modal */}

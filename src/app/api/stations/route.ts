@@ -1,7 +1,5 @@
 import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
 
 export async function POST (req: Request) {
   const data = await req.json();

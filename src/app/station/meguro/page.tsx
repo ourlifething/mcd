@@ -1,9 +1,11 @@
 import StationForm from "../components/page";
+import styles from "@/styles/station.module.css"
 export default function MeguroStation () {
   return (
-    <>
-      <h2>meguro page coding now...</h2>
-      <StationForm/>
-    </>
+    <div className={styles['station_root']}>
+      <StationForm
+        stationName="目黒駅"
+      />
+    </div>
   );
 };

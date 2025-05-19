@@ -1,3 +1,4 @@
+/**mongoDBの接続を確認するためのコンポーネント初期の接続確認のためだけのコンポーネント */
 import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 
