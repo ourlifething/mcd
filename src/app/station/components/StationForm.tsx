@@ -1,15 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import EditModal from '@/app/station/components/EditModal'
 import styles from "@/styles/station.module.css"
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import EditModal from '@/app/station/components/EditModal'
 import InputModal from './InputModal';
 /**
  * 入力フォーム
  */
 type Stations = {
+  // stationName:string;
   _id: string;
   name: string;
   text: string;

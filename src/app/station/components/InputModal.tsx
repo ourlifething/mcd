@@ -50,6 +50,5 @@ export default function InputModal ({ isOpen, onClose }: Props) {
         <button onClick={onClose}>閉じる</button>
       </div>
     </>
-
   );
 };

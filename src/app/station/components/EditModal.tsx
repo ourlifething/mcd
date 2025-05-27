@@ -39,23 +39,25 @@ export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose
   };
 
   return (
-    <div className={styles.modal}>
-      <h3>編集モーダル</h3>
-      <input
-        value={currentEdit.name}
-        onChange={(e) =>
-          setCurrentEdit({ ...currentEdit, name: e.target.value })
-        }
-      />
-      <input
-        value={currentEdit.text}
-        onChange={(e) =>
-          setCurrentEdit({ ...currentEdit, text: e.target.value })
-        }
-      />
-      <button onClick={handleSave}>保存</button>
-      <button onClick={onClose}>キャンセル</button>
-      <button onClick={handleDelete}>削除</button>
+    <div className={`${styles['modal_wrapper']} ${isOpen ? styles['show'] : ''}`} onClick={onClose}>
+      <div className={styles.modal}>
+        <h3>編集モーダル</h3>
+        <input
+          value={currentEdit.name}
+          onChange={(e) =>
+            setCurrentEdit({ ...currentEdit, name: e.target.value })
+          }
+        />
+        <input
+          value={currentEdit.text}
+          onChange={(e) =>
+            setCurrentEdit({ ...currentEdit, text: e.target.value })
+          }
+        />
+        <button onClick={handleSave}>保存</button>
+        <button onClick={onClose}>キャンセル</button>
+        <button onClick={handleDelete}>削除</button>
+      </div>
     </div>
   );
 }
