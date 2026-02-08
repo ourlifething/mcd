@@ -1,9 +1,11 @@
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { getMongoClient } from "@/lib/mongodb";
 import { ObjectId } from 'mongodb';
 
 export async function PUT (request: NextRequest, { params }: { params: { id: string } }) {
-  const client = await clientPromise;
+  const client = await getMongoClient();
   const db = client.db('portfolioDB');
   const collection = db.collection('stations')
   
@@ -19,8 +21,8 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const Client = await clientPromise;
-    const db = Client.db('portfolioDB')
+    const client = await getMongoClient();
+    const db = client.db('portfolioDB')
 
     const result = await db.collection('stations').deleteOne({
       _id: new ObjectId(params.id),

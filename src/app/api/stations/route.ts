@@ -1,9 +1,12 @@
-import clientPromise from "@/lib/mongodb";
+export const dynamic = 'force-dynamic';
+
+import { getMongoClient } from "@/lib/mongodb";
+
 import { NextResponse } from "next/server";
 
 export async function POST (req: Request) {
   const data = await req.json();
-  const client = await clientPromise;
+  const client = await getMongoClient();
   const db = client.db('portfolioDB')
   const collection = db.collection('stations')
 
@@ -12,7 +15,7 @@ export async function POST (req: Request) {
 }
 
 export async function GET () {
-  const client = await clientPromise; 
+  const client = await getMongoClient();
   const db = client.db('portfolioDB');
   const collection = db.collection('stations');
 
