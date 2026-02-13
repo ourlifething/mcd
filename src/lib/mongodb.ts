@@ -1,7 +1,6 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const uri = `mongodb+srv://${process.env.TEST_MONGODB_USERNAME}:${process.env.TEST_MONGODB_PASS}@cluster0.g9vipia.mongodb.net/?retryWrites=true&w=majority`;
-
+const uri = `mongodb+srv://${process.env.TEST_MONGODB_USERNAME}:${process.env.TEST_MONGODB_PASS}@cluster0.48at4mt.mongodb.net/?appName=Cluster0`;
 let client: MongoClient | null = null;
 let clientPromise: Promise<MongoClient> | null = null;
 

@@ -39,12 +39,12 @@ export default function StationForm ({ stationName }: Props) {
   return (
     <>
       <div className={styles['station_wrapper']}>
-        {/* <button 
+        <button 
           onClick={()=> setIsInputModal(true)}
           className={styles['station_input_btn']}
         >
             訪問情報を入力する
-        </button> */}
+        </button>
         <InputModal
           isOpen={isInputModal}
           onClose={()=> setIsInputModal(false)}
