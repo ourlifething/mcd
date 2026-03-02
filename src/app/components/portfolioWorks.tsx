@@ -24,8 +24,14 @@ export default function PortfolioWorks () {
   const garlic = {img:'/images/chiaki.jpg', w:3508, h:2481};
   const lettuce = {img:'/images/mj.png', w:2514, h:1746};
   const lettucePop = {img:'/images/mizulettuce.png', w:2272, h:1548};
+  const karashinaPop = {img:'/images/karashinalettuce.png', w:2118, h:1500};
+  const karashinaDescription = {img:'/images/karashinadescript.png', w:2211, h:1500};
+  const mizulettucesalad = {img:'/images/mizulettucesald.png', w:2213, h:1500};
+  const mizulettucesaldDesc = {img:'/images/mizulettucesalddesc.png', w:2125, h:1500};
+  const whiteserurisald = {img:'/images/whiteserurisald.png', w:2203, h:1500};
+  const whiteserurisoup = {img:'/images/whitesrurisoup.png', w:2071, h:1500};
   const lettucePopWide = {img:'/images/mizulettucewide.png', w:2274, h:798};
-  const fuji = {img:'/images/shirofujipr.png', w:2397, h:1465};
+  const fuji = {img:'/images/shirofujipr.png', w:2397, h:165};
   const greenWalker = {img:'/images/gw.png', w:2393, h:1461};
   const rita = {img:'/images/ritapr.png', w:2396, h:1459};
   const akn = { img:'/images/aknpr.png', w:2396 , h:1461 }
@@ -87,7 +93,7 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
-              <p>店舗での掲示用として商品POPを制作いたしました。
+              <p>店舗での掲示用として商品POPを制作いたしました。サラダの準備や撮影も行っております。
                 また、こちらは商品の提案時にも使用し、視覚的にわかりやすく魅力を伝えるツールとして活用いたしました。</p>
             </div>
           </div>
@@ -108,9 +114,112 @@ export default function PortfolioWorks () {
             </div>
           </div>
         </div>
+
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>Logo</h3>
+            <h3>Pop</h3>
+            <Image
+              src={karashinaPop.img}
+              alt="からし菜レタスポップ"
+              className={styles['images-size']}
+              width={karashinaPop.w}
+              height={karashinaPop.h}
+              onClick={() => openModal(karashinaPop.img, karashinaPop.w, karashinaPop.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>店舗での掲示用として商品POPを制作いたしました。サラダの準備や撮影も行っております。
+                また、こちらは商品の提案時にも使用し、視覚的にわかりやすく魅力を伝えるツールとして活用いたしました。</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>Sales Presentation</h3>
+            <Image
+              src={karashinaDescription.img}
+              alt="からし菜レタスプレゼン資料"
+              className={styles['images-size']}
+              width={karashinaDescription.w}
+              height={karashinaDescription.h}
+              onClick={() => openModal(karashinaDescription.img, karashinaDescription.w, karashinaDescription.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>「からし菜レタス」という商品のプレゼン用資料として作成しました。商品を売り込む際に現物とこの資料を持って提案することで、商品の魅力を伝えることができます。</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>Pop</h3>
+            <Image
+              src={mizulettucesalad.img}
+              alt="水レタスのサラダポップ"
+              className={styles['images-size']}
+              width={mizulettucesalad.w}
+              height={mizulettucesalad.h}
+              onClick={() => openModal(mizulettucesalad.img, mizulettucesalad.w, mizulettucesalad.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>店舗での掲示用として商品POPを制作いたしました。サラダの準備や撮影も行っております。
+                視覚的にわかりやすく魅力を伝えるツールとして活用いたしました。</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>Sales Presentation</h3>
+            <Image
+              src={mizulettucesaldDesc.img}
+              alt="水レタスのサラダプレゼン資料"
+              className={styles['images-size']}
+              width={mizulettucesaldDesc.w}
+              height={mizulettucesaldDesc.h}
+              onClick={() => openModal(mizulettucesaldDesc.img, mizulettucesaldDesc.w, mizulettucesaldDesc.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>「水レタスのサラダ」という商品のプレゼン用資料として作成しました。商品を売り込む際に現物と資料を持って提案することで、商品の魅力を伝えることができます。</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>Pop</h3>
+            <Image
+              src={whiteserurisoup.img}
+              alt="ホワイトセルリ販促"
+              className={styles['images-size']}
+              width={whiteserurisoup.w}
+              height={whiteserurisoup.h}
+              onClick={() => openModal(whiteserurisoup.img, whiteserurisoup.w, whiteserurisoup.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>ホワイトセルリの販促物として食べ方の提案用に作成しました。料理の準備や撮影も行っております。</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>Pop</h3>
+            <Image
+              src={whiteserurisald.img}
+              alt="ホワイトセルリ販促"
+              className={styles['images-size']}
+              width={whiteserurisald.w}
+              height={whiteserurisald.h}
+              onClick={() => openModal(whiteserurisald.img, whiteserurisald.w, whiteserurisald.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>ホワイトセルリの販促物として食べ方の提案用に作成しました。サラダの準備や撮影も行っております。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>Logo Graphic</h3>
             <Image 
               src={fuji.img} 
               alt="白富士マーケット提案"
@@ -126,7 +235,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>Logo</h3>
+            <h3>Logo Graphic</h3>
             <Image 
               src={greenWalker.img}
               alt="グリーンワーカーロゴ"
@@ -146,7 +255,7 @@ export default function PortfolioWorks () {
         </div>
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>Graphic</h3>
+            <h3>T-shirts Print Graphic</h3>
             <Image 
               src={rita.img}
               alt="リタ"
@@ -170,7 +279,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>Graphic</h3>
+            <h3>T-shirts Print Graphic</h3>
             <Image 
               src={akn.img} 
               alt="高柳明音さん"
