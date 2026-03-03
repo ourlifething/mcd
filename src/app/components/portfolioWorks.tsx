@@ -314,7 +314,7 @@ export default function PortfolioWorks () {
         {/* tee */}
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
-            <h3>Logo Tee</h3>
+            <h3>T-shirts Print Graphic</h3>
             <Image
               src={godVerve.img}
               alt="GOD/VerveWearage"
@@ -330,7 +330,7 @@ export default function PortfolioWorks () {
             </div>
           </div>
           <div className={styles['pict-block']}>
-            <h3>Logo tee</h3>
+            <h3>T-shirts Print Graphic</h3>
             <Image
               src={kungfu.img}
               alt="sindee"
@@ -453,44 +453,9 @@ export default function PortfolioWorks () {
             </div>
           </div>
         </div>
-        {/* bagなどの過去作品 */}
-        <div className={styles['pict-block-wrapper']}>
-          <div className={styles['pict-block']}>
-            <h3>Flyer & Poster</h3>
-            <Image
-              src={clAndK.img} 
-              alt="poster"
-              className={styles['images-size']}
-              width={clAndK.w}
-              height={clAndK.h}
-              onClick={() => openModal(clAndK.img, clAndK.w, clAndK.h)}
-              loading='lazy'
-            />
-            <div className={styles['description-wrapper']}>
-              <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作いたしました。
-                Photoshopを使用して画像を加工し、ペンキ画像を取り込んでレイヤーを分けて配置。さらに、Illustratorでロゴを重ねるなどしてデザインを完成させました。
-                裏面では限られたスペースに文字情報を整然と配置し、視認性を高めるように注意して作成しています。</p>
-            </div>
-          </div>
-          <div className={styles['pict-block']}>
-            <h3>Flyer & Poster</h3>
-            <Image 
-              src={bAndM.img}
-              alt="D.treat"
-              className={styles['images-size']}
-              width={bAndM.w}
-              height={bAndM.h}
-              onClick={() => openModal(bAndM.img, bAndM.w, bAndM.h)}
-              loading='lazy'
-            />
-            <div className={styles['description-wrapper']}>
-              <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作しました。
-                Photoshopを使用して人物をトレースする際、境目が不自然にならないよう細心の注意を払いながら作成しました。</p>
-            </div>
-          </div>
-        </div>
 
         <div className={styles['pict-block-wrapper']}>
+        
           <div className={styles['pict-block']}>
             <h3>Flyer & Poster</h3>
             <Image
