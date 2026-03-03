@@ -35,6 +35,8 @@ export default function PortfolioWorks () {
   const completefinesse = {img:'/images/cf_camo.png', w:2100, h:1500};
   const godVerve = {img:'/images/armyway.png', w:2100, h:1500};
   const kungfu = {img:'/images/kungfu.png', w:2100, h:1500};
+  const cmyktee = {img:'/images/cmyktee.png', w:2100, h:1500};
+  const menu = {img:'/images/menu.png', w:2100, h:1500};
   const fuji = {img:'/images/shirofujipr.png', w:2397, h:165};
   const greenWalker = {img:'/images/gw.png', w:2393, h:1461};
   const rita = {img:'/images/ritapr.png', w:2396, h:1459};
@@ -270,7 +272,7 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
-              <small>出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
+              <small>画像出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
               <p>30代〜40代をターゲットとした大人なカジュアルを提案するブランド、
                 <Link
                   className={styles['rita-link']}
@@ -295,7 +297,7 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
-            <small>出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
+            <small>画像出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
               <p>元SKE48の高柳明音さんとRITAのコラボレーションによるTシャツおよびジャケットのグラフィックデザインを担当いたしました。
                 ジャケットのバックプリントは「ゲーム」をテーマに、遊び心とクールさを兼ね備えたデザインに仕上げています。
                 また、Tシャツのグラフィックは、高柳明音さんがバスケットボールのPR活動を行っていた当時、架空のバスケットボールチームを想定し、そのチームロゴをデザインしたものです。
@@ -325,8 +327,8 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
-            <small>出典:<a href='https://www.carousell.com.my/p/beams-japanese-brand-army-way-emoticon-graphic-tee-1268264616/?srsltid=AfmBOorVQb1xVXZZD9c_l8lu4uEGRKCAWHrxwld7WdLJp7xihs_9BjYK' rel="noopener noreferrer" target='_blank' style={{color:'blue'} }>carousell.com</a></small>
-              <p>BEAMS-Tにて作成、手書き風なデザインをイラストレーターで作成しました。</p>
+            <small>画像出典:<a href='https://www.carousell.com.my/p/beams-japanese-brand-army-way-emoticon-graphic-tee-1268264616/?srsltid=AfmBOorVQb1xVXZZD9c_l8lu4uEGRKCAWHrxwld7WdLJp7xihs_9BjYK' rel="noopener noreferrer" target='_blank' style={{color:'blue'} }>carousell.com</a></small>
+              <p>BEAMS-T向けに、手書きのラフなタッチを活かしたグラフィックデザインを制作しました。あえて擦れや歪みを残すことで、ストリート感と抜け感のある表現に仕上げています。</p>
             </div>
           </div>
           <div className={styles['pict-block']}>
@@ -360,7 +362,7 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
-            <small>出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
+            <small>画像出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
               <p>文字間や文字サイズを意識し女性らしいカレッジロゴを作成しプリントTシャツを作成しました、同じ製版をトートバックにも使用してます</p>
             </div>
           </div>
@@ -377,7 +379,42 @@ export default function PortfolioWorks () {
             />
             <div className={styles['description-wrapper']}>
               <small>画像出典:<a href='https://blue-room.jp/product/complete-finesse-tote-bag' target='_blank' style={{color: 'blue'}}>blue-room.jp</a></small>
-              <p>Complete Finesseというメンズカジュアルブランドの迷彩パターンをイラストレータで作成し生地を作成しました。トートバッグやバックパックなどをこの生地で作成しました。実寸サイズや色の濃淡を意識して作成ました。</p>
+              <p>メンズカジュアルブランド「Complete Finesse」の迷彩パターンをIllustratorで制作し、生地として展開しました。トートバッグやバックパックなどのアイテムに落とし込み、実寸を意識したパターン設計と色の濃淡バランスにこだわって制作しています。</p>
+            </div>
+          </div>
+        </div>
+        {/* menu,tee */}
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>T-shirts Print Graphic</h3>
+            <Image
+              src={cmyktee.img}
+              alt="complete finesse"
+              className={styles['images-size']}
+              width={cmyktee.w}
+              height={cmyktee.h}
+              onClick={() => openModal(cmyktee.img, cmyktee.w, cmyktee.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+            <small>画像出典:<a href='https://antiknovum.official.ec/items/63827497' target='_blank' style={{color:'blue'}}>antiknovum</a></small>
+              <p>CMYKカラーの重なりやズレを活かし、視覚的なインパクトと動きを感じさせる抽象的なロゴデザインに仕上げました。</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>menu</h3>
+            <Image
+              src={menu.img}
+              alt="junkadelic menu"
+              className={styles['images-size']}
+              width={menu.w}
+              height={menu.h}
+              onClick={() => openModal(menu.img, menu.w, menu.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <small>画像出典:<a href='https://www.yelp.com/biz/junkadelic-%E7%9B%AE%E9%BB%92%E5%8C%BA-2?osq=Mexican' target='_blank' style={{color: 'blue'}}>yelp.com</a></small>
+              <p>メキシコ料理店のメニュー表を制作しました。ヴィンテージ感のある質感と配色を取り入れ、現地の雰囲気を感じられるデザインに仕上げました。</p>
             </div>
           </div>
         </div>
