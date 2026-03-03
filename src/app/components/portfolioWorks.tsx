@@ -31,6 +31,10 @@ export default function PortfolioWorks () {
   const whiteserurisald = {img:'/images/whiteserurisald.png', w:2203, h:1500};
   const whiteserurisoup = {img:'/images/whitesrurisoup.png', w:2071, h:1500};
   const lettucePopWide = {img:'/images/mizulettucewide.png', w:2274, h:798};
+  const surfKing = {img:'/images/surf_king.png', w:2100, h:1500};
+  const completefinesse = {img:'/images/cf_camo.png', w:2100, h:1500};
+  const godVerve = {img:'/images/armyway.png', w:2100, h:1500};
+  const kungfu = {img:'/images/kungfu.png', w:2100, h:1500};
   const fuji = {img:'/images/shirofujipr.png', w:2397, h:165};
   const greenWalker = {img:'/images/gw.png', w:2393, h:1461};
   const rita = {img:'/images/ritapr.png', w:2396, h:1459};
@@ -266,6 +270,7 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
+              <small>出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
               <p>30代〜40代をターゲットとした大人なカジュアルを提案するブランド、
                 <Link
                   className={styles['rita-link']}
@@ -290,13 +295,93 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
+            <small>出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
               <p>元SKE48の高柳明音さんとRITAのコラボレーションによるTシャツおよびジャケットのグラフィックデザインを担当いたしました。
                 ジャケットのバックプリントは「ゲーム」をテーマに、遊び心とクールさを兼ね備えたデザインに仕上げています。
                 また、Tシャツのグラフィックは、高柳明音さんがバスケットボールのPR活動を行っていた当時、架空のバスケットボールチームを想定し、そのチームロゴをデザインしたものです。
                 アパレルとしての完成度を意識しながら、コンセプトやストーリー性も大切に制作いたしました。</p>
+                <a 
+                  href="https://www.instagram.com/reels/CFeSN9THQvn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{color : 'blue'}}
+                >
+                  <small>第一弾のコラボはこちら</small>
+                </a>
             </div>
           </div>
         </div>
+        {/* tee */}
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>Logo Tee</h3>
+            <Image
+              src={godVerve.img}
+              alt="GOD/VerveWearage"
+              className={styles['images-size']}
+              width={godVerve.w}
+              height={godVerve.h}
+              onClick={() => openModal(godVerve.img, godVerve.w, godVerve.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+            <small>出典:<a href='https://www.carousell.com.my/p/beams-japanese-brand-army-way-emoticon-graphic-tee-1268264616/?srsltid=AfmBOorVQb1xVXZZD9c_l8lu4uEGRKCAWHrxwld7WdLJp7xihs_9BjYK' rel="noopener noreferrer" target='_blank' style={{color:'blue'} }>carousell.com</a></small>
+              <p>BEAMS-Tにて作成、手書き風なデザインをイラストレーターで作成しました。</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>Logo tee</h3>
+            <Image
+              src={kungfu.img}
+              alt="sindee"
+              className={styles['images-size']}
+              width={kungfu.w}
+              height={kungfu.h}
+              onClick={() => openModal(kungfu.img, kungfu.w, kungfu.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <small>画像出典:<a href='https://www.grailed.com/listings/81848008-japanese-brand-sindee-05-spring-summer-kungfu-university-tee' target='_blank' style={{color: 'blue'}}>grailed.com</a></small>
+              <p>架空のカレッジTシャツを作成しました。古着のようなダメージをロゴに加えビンテージ感を出してあります。</p>
+            </div>
+          </div>
+        </div>
+        {/* bagなど */}
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>Logo Tee / Tote Bag</h3>
+            <Image
+              src={surfKing.img}
+              alt="リタジーンズトーキョー"
+              className={styles['images-size']}
+              width={surfKing.w}
+              height={surfKing.h}
+              onClick={() => openModal(surfKing.img, surfKing.w, surfKing.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+            <small>出典:<a href='https://www.instagram.com/rita_jeans_tokyo/?hl=ja' target='_blank' style={{color:'blue'}}>rita_jeans_tokyo</a></small>
+              <p>文字間や文字サイズを意識し女性らしいカレッジロゴを作成しプリントTシャツを作成しました、同じ製版をトートバックにも使用してます</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>Camo pattern</h3>
+            <Image
+              src={completefinesse.img}
+              alt="completefinesse"
+              className={styles['images-size']}
+              width={completefinesse.w}
+              height={completefinesse.h}
+              onClick={() => openModal(completefinesse.img, completefinesse.w, completefinesse.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <small>画像出典:<a href='https://blue-room.jp/product/complete-finesse-tote-bag' target='_blank' style={{color: 'blue'}}>blue-room.jp</a></small>
+              <p>Complete Finesseというメンズカジュアルブランドの迷彩パターンをイラストレータで作成し生地を作成しました。トートバッグやバックパックなどをこの生地で作成しました。実寸サイズや色の濃淡を意識して作成ました。</p>
+            </div>
+          </div>
+        </div>
+
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
             <h3>Sticker Poster</h3>
@@ -327,6 +412,7 @@ export default function PortfolioWorks () {
               loading='lazy'
             />
             <div className={styles['description-wrapper']}>
+              <small>画像出典:<a href='https://www.amazon.co.jp/dp/B0C4PRRXTC?ref=cm_sw_r_cso_cp_apin_dp_1RD6WBX4ZSYNVEXSJ67W&ref_=cm_sw_r_cso_cp_apin_dp_1RD6WBX4ZSYNVEXSJ67W&social_share=cm_sw_r_cso_cp_apin_dp_1RD6WBX4ZSYNVEXSJ67W&starsLeft=1&skipTwisterOG=1&newOGT=1&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn1nUakDGHmiLuj1h4o23PfuYzYpdmVX6bDepk7Z5HijU6qJcyQIRcAP3Noos_aem_eykTKoOhEgvWTw91V3LwfQ&utm_content=link_in_bio&utm_medium=social&utm_source=ig&th=1' target='_blank' style={{color: 'blue'}}>D-Treat</a></small>
               <p>D.TREAT オールインワン メンズ美容液のパッケージデザインを制作いたしました。
                 シンプルで清潔感のあるデザインを心がけ、男性向けスキンケア商品としての上質さや信頼感が伝わるよう意識して仕上げております。</p>
             </div>
@@ -367,6 +453,43 @@ export default function PortfolioWorks () {
             </div>
           </div>
         </div>
+        {/* bagなどの過去作品 */}
+        <div className={styles['pict-block-wrapper']}>
+          <div className={styles['pict-block']}>
+            <h3>Flyer & Poster</h3>
+            <Image
+              src={clAndK.img} 
+              alt="poster"
+              className={styles['images-size']}
+              width={clAndK.w}
+              height={clAndK.h}
+              onClick={() => openModal(clAndK.img, clAndK.w, clAndK.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作いたしました。
+                Photoshopを使用して画像を加工し、ペンキ画像を取り込んでレイヤーを分けて配置。さらに、Illustratorでロゴを重ねるなどしてデザインを完成させました。
+                裏面では限られたスペースに文字情報を整然と配置し、視認性を高めるように注意して作成しています。</p>
+            </div>
+          </div>
+          <div className={styles['pict-block']}>
+            <h3>Flyer & Poster</h3>
+            <Image 
+              src={bAndM.img}
+              alt="D.treat"
+              className={styles['images-size']}
+              width={bAndM.w}
+              height={bAndM.h}
+              onClick={() => openModal(bAndM.img, bAndM.w, bAndM.h)}
+              loading='lazy'
+            />
+            <div className={styles['description-wrapper']}>
+              <p>Carhartt主催のイベント「Bathroom」のフライヤーおよびポスターを制作しました。
+                Photoshopを使用して人物をトレースする際、境目が不自然にならないよう細心の注意を払いながら作成しました。</p>
+            </div>
+          </div>
+        </div>
+
         <div className={styles['pict-block-wrapper']}>
           <div className={styles['pict-block']}>
             <h3>Flyer & Poster</h3>
