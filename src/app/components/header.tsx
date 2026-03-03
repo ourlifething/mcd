@@ -14,11 +14,11 @@ export default function Header () {
       </Link>
       <div className={styles['header-title']}>
         <h1>Portfolios</h1>
-        <h2>製作者：葉山　竜二</h2>
-        <p className={styles['mail-add']}>
+        {/* <h2>製作者：葉山　竜二</h2> */}
+        {/* <p className={styles['mail-add']}>
           連絡先：
           <a href="mailto:vervewearage@gmail.com" target="_blank" rel="noopener noreferrer">vervewearage@gmail.com</a>
-        </p>
+        </p> */}
       </div>
       <div className={styles['icon-block']}>
         <Image src='/images/illustlator.webp' alt='イラレロゴ' className={styles['icon-ai']} width={173} height={173} />
