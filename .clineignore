@@ -1,0 +1,34 @@
+# Secrets / Environment
+.env
+.env.*
+!.env.example
+recovery-codes.txt
+
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build / Cache
+dist/
+build/
+.cache/
+.turbo/
+
+# Test / Coverage
+coverage/
+
+# Git
+.git/
+
+# Editor
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
