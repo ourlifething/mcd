@@ -10,10 +10,11 @@ import InputModal from './InputModal';
  * 入力フォーム
  */
 type Stations = {
-  // stationName:string;
   _id: string;
   name: string;
   text: string;
+  imageUrl?: string;
+  rating?: string;
 }
 type Props = {
   stationName: string;
@@ -48,6 +49,12 @@ export default function StationForm ({ stationName }: Props) {
         <InputModal
           isOpen={isInputModal}
           onClose={()=> setIsInputModal(false)}
+          onSuccess={async () => {
+            const res = await fetch('/api/stations');
+            const data = await res.json();
+            setList(data);
+            setIsInputModal(false);
+          }}
         />
         <h2 className={styles['station_title']}>{stationName}のおすすめ</h2>
       </div>
@@ -66,6 +73,16 @@ export default function StationForm ({ stationName }: Props) {
                 key={list._id }
                 className={styles['station_list_block']}
               >
+                {list.imageUrl && (
+                  <div style={{ width: '100%', height: '200px', marginBottom: '12px', overflow: 'hidden', borderRadius: '4px' }}>
+                    <img src={list.imageUrl} alt={list.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                )}
+                {list.rating && (
+                  <div style={{ fontSize: '12px', color: '#666', marginBottom: '6px', fontWeight: '500', letterSpacing: '0.05em' }}>
+                    ★ {list.rating}
+                  </div>
+                )}
                 <div className={styles['station_list_name']}>
                   {list.name}
                 </div>
@@ -99,3 +116,4 @@ export default function StationForm ({ stationName }: Props) {
     </>
   );
 };
+
