@@ -539,9 +539,9 @@ export default function PortfolioWorks () {
           onClose={closeModal}
         />
       </section>
-      <section className={styles['banners']}>
+      {/* <section className={styles['banners']}>
         <Banner/>
-      </section>
+      </section> */}
       <section className={styles['contact-form']}>
         <ContactForm/>
       </section>
