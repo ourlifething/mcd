@@ -16,7 +16,7 @@ export default function Header() {
         />
       </Link>
       <div className={styles["header-title"]}>
-        <h1>Portfolios</h1>
+        {/* <h1>MCG DESIGN</h1> */}
         {/* <h2>製作者：葉山　竜二</h2> */}
         {/* <p className={styles['mail-add']}>
           連絡先：

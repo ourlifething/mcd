@@ -137,11 +137,12 @@
 
 .header-title h1,
 .header-title h2 {
-  color: #38c2c2;
+  color: #111111;
 }
 
 .header-title h1 {
-  font-size: 24px;
+  font-size: 16px;
+  font-weight: 1000;
 }
 
 .header-title h2 {
