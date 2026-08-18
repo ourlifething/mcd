@@ -12,6 +12,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
 
   const [name, setName] = useState('');
   const [text, setText] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [rating, setRating] = useState<'おすすめ' | 'かなりおすすめ'>('おすすめ');
@@ -29,12 +30,18 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
     e.preventDefault();
     if (isSubmitting) return;
 
+    if (!password || !password.trim()) {
+      alert('パスワードを入力してください');
+      return;
+    }
+
     setIsSubmitting(true);
 
     const formData = new FormData();
     formData.append('name', name);
     formData.append('text', text);
     formData.append('rating', rating);
+    formData.append('password', password);
     if (selectedImage) {
       formData.append('image', selectedImage);
     }
@@ -58,6 +65,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
       // 成功時のみ状態をリセットしてモーダルを閉じる
       setName(''); 
       setText(''); 
+      setPassword('');
       setSelectedImage(null); 
       setImagePreview(null); 
       setRating('おすすめ');
@@ -138,6 +146,11 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
               rows={4} 
               style={s.textarea} 
             />
+          </div>
+
+          <div>
+            <label style={s.label}>パスワード</label>
+            <input type="password" placeholder="パスワードを入力" value={password} onChange={(e) => setPassword(e.target.value)} style={s.input} />
           </div>
 
           <button type="submit" disabled={isSubmitting} style={{ ...s.submit, opacity: isSubmitting ? 0.6 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>

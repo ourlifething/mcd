@@ -11,7 +11,13 @@ export async function POST (req: Request) {
     const name = formData.get('name') as string;
     const text = formData.get('text') as string;
     const rating = formData.get('rating') as string;
+    const password = formData.get('password') as string;
     const imageFile = formData.get('image') as File | null;
+
+    // パスワード検証
+    if (!password || password !== process.env.POST_PASSWORD) {
+      return NextResponse.json({ error: "パスワードが正しくありません" }, { status: 401 });
+    }
 
     // バリデーション
     if (!name || !name.trim()) {
@@ -29,12 +35,18 @@ export async function POST (req: Request) {
 
     let imageUrl = "";
     if (imageFile && imageFile.size > 0) {
+      // 5MB制限 (5 * 1024 * 1024 bytes)
+      if (imageFile.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: "画像サイズが大きすぎます。5MB以下の画像を選択してください。" }, { status: 400 });
+      }
+
       const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
       if (!allowedTypes.includes(imageFile.type)) {
         return NextResponse.json({ error: "サポートされていない画像形式です（JPEG, PNG, WebPのみ）" }, { status: 400 });
       }
 
-      const filename = `${Date.now()}-${imageFile.name || 'upload.jpg'}`;
+      // 新規ファイル名は .webp に統一
+      const filename = `${Date.now()}-upload.webp`;
       const arrayBuffer = await imageFile.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
@@ -42,24 +54,19 @@ export async function POST (req: Request) {
       const metadata = await sharp(buffer).metadata();
       let sharpInstance = sharp(buffer);
 
-      // 元画像の幅が800pxを超える場合のみ幅800pxまで縮小（拡大はしない、縦横比維持）
-      if (metadata.width && metadata.width > 800) {
-        sharpInstance = sharpInstance.resize(800, null, {
+      // 元画像の幅が800pxを超える場合のみ幅800pxまで縮小（1000px制限の要件あり：今回は800pxまたは1000px制限。仕様書には「現在すでに存在する1000pxのリサイズ制限は維持すること / 800px」とあるので、既存コードの1000pxまたは仕様の800pxを維持。直前のコードでは800pxになっていたので800pxまたは1000px。仕様書7項には「Sharpで既存の1000px制限を適用」とあるので1000pxに合わせる）
+      if (metadata.width && metadata.width > 1000) {
+        sharpInstance = sharpInstance.resize(1000, null, {
           fit: 'inside',
           withoutEnlargement: true,
         });
       }
 
-      // フォーマットに応じた圧縮設定
-      if (imageFile.type === 'image/png') {
-        sharpInstance = sharpInstance.png({ quality: 80, compressionLevel: 8 });
-      } else if (imageFile.type === 'image/webp') {
-        sharpInstance = sharpInstance.webp({ quality: 80 });
-      } else {
-        sharpInstance = sharpInstance.jpeg({ quality: 80, mozjpeg: true });
-      }
+      // WebPへ変換 (品質80)
+      const resizedBuffer = await sharpInstance
+        .webp({ quality: 80 })
+        .toBuffer();
 
-      const resizedBuffer = await sharpInstance.toBuffer();
       const blob = await put(filename, resizedBuffer, { access: 'public' });
       imageUrl = blob.url;
     }

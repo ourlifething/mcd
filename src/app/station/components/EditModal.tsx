@@ -14,6 +14,7 @@ type Props = {
 export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose, onSave }: Props) {
   if (!isOpen || !currentEdit) return null;
 
+  const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -28,13 +29,21 @@ export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose
       alert('コメントは100文字以内で入力してください');
       return;
     }
+    if (!password || !password.trim()) {
+      alert('パスワードを入力してください');
+      return;
+    }
 
     setIsSubmitting(true);
     try {
       const res = await fetch(`/api/stations/${currentEdit._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: currentEdit.name.trim(), text: currentEdit.text.trim() }),
+        body: JSON.stringify({ 
+          name: currentEdit.name.trim(), 
+          text: currentEdit.text.trim(),
+          password 
+        }),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -42,6 +51,7 @@ export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose
         setIsSubmitting(false);
         return;
       }
+      setPassword('');
       await onSave();
     } catch {
       alert('通信エラーが発生しました');
@@ -51,14 +61,26 @@ export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose
 
   const handleDelete = async () => {
     if (!confirm('本当に削除しますか？') || isSubmitting) return;
+
+    if (!password || !password.trim()) {
+      alert('パスワードを入力してください');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/stations/${currentEdit._id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/stations/${currentEdit._id}`, { 
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
       if (!res.ok) {
-        alert('削除に失敗しました');
+        const err = await res.json().catch(() => ({}));
+        alert(err.error || '削除に失敗しました');
         setIsSubmitting(false);
         return;
       }
+      setPassword('');
       await onSave();
     } catch {
       alert('通信エラーが発生しました');
@@ -99,6 +121,17 @@ export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose
               }} 
               rows={4} 
               className={styles.textarea} 
+            />
+          </div>
+
+          <div>
+            <label className={styles.label}>パスワード</label>
+            <input 
+              type="password" 
+              placeholder="パスワードを入力" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              className={styles.input} 
             />
           </div>
 
