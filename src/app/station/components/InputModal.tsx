@@ -15,6 +15,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [rating, setRating] = useState<'おすすめ' | 'かなりおすすめ'>('おすすめ');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,6 +27,10 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('text', text);
@@ -43,6 +48,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
       if (!res.ok) {
         const errData = await res.json();
         alert(errData.error || '投稿に失敗しました');
+        setIsSubmitting(false);
         return;
       }
 
@@ -62,6 +68,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
     } catch (error) {
       console.error('通信エラー:', error);
       alert('通信エラーが発生しました');
+      setIsSubmitting(false);
     }
   };
 
@@ -116,11 +123,26 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
           </div>
 
           <div>
-            <label style={s.label}>コメント</label>
-            <textarea placeholder="コメントを入力" value={text} onChange={(e) => setText(e.target.value)} rows={4} style={s.textarea} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <label style={{ ...s.label, marginBottom: 0 }}>コメント</label>
+              <span style={{ fontSize: '11px', color: '#666' }}>{text.length} / 100</span>
+            </div>
+            <textarea 
+              placeholder="コメントを入力（100文字まで）" 
+              value={text} 
+              onChange={(e) => {
+                if (e.target.value.length <= 100) {
+                  setText(e.target.value);
+                }
+              }} 
+              rows={4} 
+              style={s.textarea} 
+            />
           </div>
 
-          <button type="submit" style={s.submit}>投稿する</button>
+          <button type="submit" disabled={isSubmitting} style={{ ...s.submit, opacity: isSubmitting ? 0.6 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>
+            {isSubmitting ? 'アップロード中…' : '投稿する'}
+          </button>
         </form>
       </div>
     </div>

@@ -37,6 +37,27 @@ export default function StationForm ({ stationName }: Props) {
     .catch(err => console.error('データ取得失敗:', err))
   }, [lists])
 
+  const renderTextWithLinks = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, i) => {
+      if (part.match(urlRegex)) {
+        return (
+          <a
+            key={i}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#38C2C2', textDecoration: 'underline', wordBreak: 'break-all' }}
+          >
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+  };
+
   return (
     <>
       <div className={styles['station_wrapper']}>
@@ -74,7 +95,7 @@ export default function StationForm ({ stationName }: Props) {
                 className={styles['station_list_block']}
               >
                 {list.imageUrl && (
-                  <div style={{ width: '100%', height: '200px', marginBottom: '12px', overflow: 'hidden', borderRadius: '4px' }}>
+                  <div style={{ width: '100%', aspectRatio: '4 / 5', marginBottom: '12px', overflow: 'hidden', borderRadius: '4px' }}>
                     <img src={list.imageUrl} alt={list.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 )}
@@ -87,7 +108,7 @@ export default function StationForm ({ stationName }: Props) {
                   {list.name}
                 </div>
                 <div className={styles['station_list_text']}>
-                  {list.text}
+                  {renderTextWithLinks(list.text)}
                 </div>
                 <button 
                   onClick={()=> { setCurrentEdit(list), setIsModalOpen(true) }}
