@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from "@/styles/station.module.css"
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 import EditModal from '@/app/station/components/EditModal'
 import InputModal from './InputModal';
 /**
@@ -89,14 +90,21 @@ export default function StationForm ({ stationName }: Props) {
           className={styles['motion-div']}
         >
           <ul className={styles['station_list']}>
-            {lists.map((list) => (
+            {lists.map((list, index) => (
               <li 
                 key={list._id }
                 className={styles['station_list_block']}
               >
                 {list.imageUrl && (
-                  <div style={{ width: '100%', aspectRatio: '4 / 5', marginBottom: '12px', overflow: 'hidden', borderRadius: '4px' }}>
-                    <img src={list.imageUrl} alt={list.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{ width: '100%', aspectRatio: '4 / 5', marginBottom: '12px', overflow: 'hidden', borderRadius: '4px', position: 'relative' }}>
+                    <Image 
+                      src={list.imageUrl} 
+                      alt={list.name} 
+                      fill
+                      sizes="(max-width: 600px) 100vw, (max-width: 1080px) 50vw, 240px"
+                      priority={index < 3}
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                 )}
                 {list.rating && (
