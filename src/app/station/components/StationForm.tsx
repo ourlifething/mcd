@@ -22,8 +22,9 @@ type Stations = {
 type Props = {
   stationName: string;
   stationSlug: string;
+  initialList: Stations[];
 }
-export default function StationForm ({ stationName, stationSlug }: Props) {
+export default function StationForm ({ stationName, stationSlug, initialList }: Props) {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -33,13 +34,7 @@ export default function StationForm ({ stationName, stationSlug }: Props) {
   const [isInputModal, setIsInputModal] = useState(false)
   const [currentEdit, setCurrentEdit] = useState<Stations | null>(null)
 
-  const [lists, setList] = useState<Stations[]>([])
-  useEffect(() => {
-    fetch(`/api/stations?station=${stationSlug}`)
-    .then(res => res.json())
-    .then(data => setList(data))
-    .catch(err => console.error('データ取得失敗:', err))
-  }, [stationSlug])
+  const [lists, setList] = useState<Stations[]>(initialList)
 
   const renderTextWithLinks = (text: string) => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
