@@ -1,8 +1,17 @@
 import { getMongoClient } from "./mongodb";
 
+export type StationItem = {
+  _id: string;
+  name: string;
+  text: string;
+  imageUrl?: string;
+  rating?: string;
+  station?: string;
+};
+
 const allowedStations = ['meguro', 'musashikoyama', 'fudoumae', 'nishikoyama'];
 
-export async function getStationsBySlug(stationSlug: string) {
+export async function getStationsBySlug(stationSlug: string): Promise<StationItem[]> {
   if (!stationSlug || !allowedStations.includes(stationSlug)) {
     return [];
   }
@@ -12,8 +21,12 @@ export async function getStationsBySlug(stationSlug: string) {
     const collection = db.collection('stations');
     const data = await collection.find({ station: stationSlug }).toArray();
     return data.map(item => ({
-      ...item,
       _id: item._id.toString(),
+      name: item.name,
+      text: item.text,
+      imageUrl: item.imageUrl,
+      rating: item.rating,
+      station: item.station,
     }));
   } catch (error) {
     console.error("Failed to fetch stations:", error);
