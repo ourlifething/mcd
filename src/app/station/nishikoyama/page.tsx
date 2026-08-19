@@ -1,8 +1,10 @@
-export default function Station () {
+import StationForm from "../components/StationForm";
+import styles from "@/styles/station.module.css";
+export default function NishikoyamaStation() {
   return (
-    <>
-      <h2>nishikoyama page coding now...</h2>
-    </>
+    <div className={styles["station_root"]}>
+      <StationForm stationName="西小山駅" stationSlug="nishikoyama" />
+    </div>
   );
-};
+}
 

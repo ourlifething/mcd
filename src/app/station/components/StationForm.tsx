@@ -5,6 +5,7 @@ import styles from "@/styles/station.module.css"
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import Link from 'next/link';
 import EditModal from '@/app/station/components/EditModal'
 import InputModal from './InputModal';
 /**
@@ -16,11 +17,13 @@ type Stations = {
   text: string;
   imageUrl?: string;
   rating?: string;
+  station?: string;
 }
 type Props = {
   stationName: string;
+  stationSlug: string;
 }
-export default function StationForm ({ stationName }: Props) {
+export default function StationForm ({ stationName, stationSlug }: Props) {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -32,11 +35,11 @@ export default function StationForm ({ stationName }: Props) {
 
   const [lists, setList] = useState<Stations[]>([])
   useEffect(() => {
-    fetch('/api/stations')
+    fetch(`/api/stations?station=${stationSlug}`)
     .then(res => res.json())
     .then(data => setList(data))
     .catch(err => console.error('データ取得失敗:', err))
-  }, [lists])
+  }, [stationSlug])
 
   const renderTextWithLinks = (text: string) => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -62,6 +65,11 @@ export default function StationForm ({ stationName }: Props) {
   return (
     <>
       <div className={styles['station_wrapper']}>
+        <div style={{ marginBottom: '16px' }}>
+          <Link href="/guide" style={{ fontSize: '14px', color: '#333', textDecoration: 'underline', letterSpacing: '0.05em' }}>
+            &larr; 駅一覧へ戻る
+          </Link>
+        </div>
         <button 
           onClick={()=> setIsInputModal(true)}
           className={styles['station_input_btn']}
@@ -71,8 +79,9 @@ export default function StationForm ({ stationName }: Props) {
         <InputModal
           isOpen={isInputModal}
           onClose={()=> setIsInputModal(false)}
+          stationSlug={stationSlug}
           onSuccess={async () => {
-            const res = await fetch('/api/stations');
+            const res = await fetch(`/api/stations?station=${stationSlug}`);
             const data = await res.json();
             setList(data);
             setIsInputModal(false);
@@ -133,7 +142,7 @@ export default function StationForm ({ stationName }: Props) {
               currentEdit={currentEdit}
               setCurrentEdit={setCurrentEdit}
               onSave={async () => {
-                const res = await fetch('/api/stations');
+                const res = await fetch(`/api/stations?station=${stationSlug}`);
                 const data = await res.json();
                 setList(data);
                 setIsModalOpen(false);

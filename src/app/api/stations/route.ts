@@ -5,6 +5,8 @@ import { NextResponse } from "next/server";
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
 
+const allowedStations = ['meguro', 'musashikoyama', 'fudoumae', 'nishikoyama'];
+
 export async function POST (req: Request) {
   try {
     const formData = await req.formData();
@@ -12,11 +14,17 @@ export async function POST (req: Request) {
     const text = formData.get('text') as string;
     const rating = formData.get('rating') as string;
     const password = formData.get('password') as string;
+    const station = formData.get('station') as string;
     const imageFile = formData.get('image') as File | null;
 
     // パスワード検証
     if (!password || password !== process.env.POST_PASSWORD) {
       return NextResponse.json({ error: "パスワードが正しくありません" }, { status: 401 });
+    }
+
+    // 駅情報のバリデーション
+    if (!station || !allowedStations.includes(station)) {
+      return NextResponse.json({ error: "不正な駅情報です" }, { status: 400 });
     }
 
     // バリデーション
@@ -54,9 +62,8 @@ export async function POST (req: Request) {
       const metadata = await sharp(buffer).metadata();
       let sharpInstance = sharp(buffer);
 
-      // 元画像の幅が800pxを超える場合のみ幅800pxまで縮小（1000px制限の要件あり：今回は800pxまたは1000px制限。仕様書には「現在すでに存在する1000pxのリサイズ制限は維持すること / 800px」とあるので、既存コードの1000pxまたは仕様の800pxを維持。直前のコードでは800pxになっていたので800pxまたは1000px。仕様書7項には「Sharpで既存の1000px制限を適用」とあるので1000pxに合わせる）
-      if (metadata.width && metadata.width > 1000) {
-        sharpInstance = sharpInstance.resize(1000, null, {
+      if (metadata.width && metadata.width > 800) {
+        sharpInstance = sharpInstance.resize(800, null, {
           fit: 'inside',
           withoutEnlargement: true,
         });
@@ -80,6 +87,7 @@ export async function POST (req: Request) {
       text: text.trim(),
       rating,
       imageUrl,
+      station,
     };
 
     const result = await collection.insertOne(newData);
@@ -90,12 +98,19 @@ export async function POST (req: Request) {
   }
 }
 
-export async function GET () {
+export async function GET (req: Request) {
+  const { searchParams } = new URL(req.url);
+  const station = searchParams.get('station');
+
+  if (!station || !allowedStations.includes(station)) {
+    return NextResponse.json([], { status: 200 });
+  }
+
   const client = await getMongoClient();
   const db = client.db('portfolioDB');
   const collection = db.collection('stations');
 
-  const data = await collection.find({}).toArray();
+  const data = await collection.find({ station }).toArray();
   return NextResponse.json(data);
 }
 

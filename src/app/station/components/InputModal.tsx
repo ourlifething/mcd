@@ -5,9 +5,10 @@ type Props = {
   isOpen: boolean; 
   onClose: () => void; 
   onSuccess?: () => void;
+  stationSlug: string;
 }
 
-export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
+export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug }: Props) {
   if (!isOpen) return null;
 
   const [name, setName] = useState('');
@@ -17,12 +18,92 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [rating, setRating] = useState<'おすすめ' | 'かなりおすすめ'>('おすすめ');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [optimizeMessage, setOptimizeMessage] = useState('');
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const compressImage = (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new window.Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const MAX_SIZE = 800;
+
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height = Math.round((height * MAX_SIZE) / width);
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width = Math.round((width * MAX_SIZE) / height);
+              height = MAX_SIZE;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(file);
+            return;
+          }
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let quality = 0.8;
+          const tryCompress = () => {
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  resolve(file);
+                  return;
+                }
+                if (blob.size > 1 * 1024 * 1024 && quality > 0.4) {
+                  quality -= 0.1;
+                  tryCompress();
+                } else {
+                  const newName = file.name.replace(/\.[^/.]+$/, '') + '.webp';
+                  const compressedFile = new File([blob], newName, {
+                    type: 'image/webp',
+                    lastModified: Date.now(),
+                  });
+                  resolve(compressedFile);
+                }
+              },
+              'image/webp',
+              quality
+            );
+          };
+          tryCompress();
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
+    });
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setIsSubmitting(true);
+      setOptimizeMessage('画像を最適化しています…');
+      try {
+        const compressedFile = await compressImage(file);
+        setSelectedImage(compressedFile);
+        setImagePreview(URL.createObjectURL(compressedFile));
+      } catch (err) {
+        console.error('画像圧縮エラー:', err);
+        setSelectedImage(file);
+        setImagePreview(URL.createObjectURL(file));
+      } finally {
+        setIsSubmitting(false);
+        setOptimizeMessage('');
+        e.target.value = '';
+      }
     }
   };
 
@@ -42,6 +123,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess }: Props) {
     formData.append('text', text);
     formData.append('rating', rating);
     formData.append('password', password);
+    formData.append('station', stationSlug);
     if (selectedImage) {
       formData.append('image', selectedImage);
     }
