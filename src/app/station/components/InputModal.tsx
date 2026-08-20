@@ -1,24 +1,29 @@
 'use client'
 import { useState } from 'react';
+import { StationMaster } from '@/lib/stations';
+import { useRouter } from 'next/navigation';
 
 type Props = { 
   isOpen: boolean; 
   onClose: () => void; 
-  onSuccess?: () => void;
+  onSuccess?: (targetStation: string) => void;
   stationSlug: string;
+  stationsList: StationMaster[];
 }
 
-export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug }: Props) {
+export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, stationsList }: Props) {
   if (!isOpen) return null;
 
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedStation, setSelectedStation] = useState(stationSlug);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [rating, setRating] = useState<'おすすめ' | 'かなりおすすめ'>('おすすめ');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [optimizeMessage, setOptimizeMessage] = useState('');
+  const router = useRouter();
 
   const compressImage = (file: File): Promise<File> => {
     return new Promise((resolve, reject) => {
@@ -123,7 +128,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug }:
     formData.append('text', text);
     formData.append('rating', rating);
     formData.append('password', password);
-    formData.append('station', stationSlug);
+    formData.append('station', selectedStation);
     if (selectedImage) {
       formData.append('image', selectedImage);
     }
@@ -152,7 +157,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug }:
       setImagePreview(null); 
       setRating('おすすめ');
       if (onSuccess) {
-        onSuccess();
+        onSuccess(selectedStation);
       }
       onClose();
     } catch (error) {
@@ -202,6 +207,21 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug }:
           <div>
             <label style={s.label}>店舗名</label>
             <input type="text" placeholder="店舗名を入力" value={name} onChange={(e) => setName(e.target.value)} style={s.input} />
+          </div>
+
+          <div>
+            <label style={s.label}>駅</label>
+            <select 
+              value={selectedStation} 
+              onChange={(e) => setSelectedStation(e.target.value)} 
+              style={s.input}
+            >
+              {stationsList.map((st) => (
+                <option key={st.slug} value={st.slug}>
+                  {st.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>

@@ -6,9 +6,10 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import EditModal from '@/app/station/components/EditModal'
 import InputModal from './InputModal';
-import { StationItem } from '@/lib/stations';
+import { StationItem, StationMaster } from '@/lib/stations';
 /**
  * 入力フォーム
  */
@@ -16,8 +17,9 @@ type Props = {
   stationName: string;
   stationSlug: string;
   initialList: StationItem[];
+  stationsList: StationMaster[];
 }
-export default function StationForm ({ stationName, stationSlug, initialList }: Props) {
+export default function StationForm ({ stationName, stationSlug, initialList, stationsList }: Props) {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -26,8 +28,8 @@ export default function StationForm ({ stationName, stationSlug, initialList }: 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputModal, setIsInputModal] = useState(false)
   const [currentEdit, setCurrentEdit] = useState<StationItem | null>(null)
-
   const [lists, setList] = useState<StationItem[]>(initialList)
+  const router = useRouter();
 
   const renderTextWithLinks = (text: string) => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -68,11 +70,17 @@ export default function StationForm ({ stationName, stationSlug, initialList }: 
           isOpen={isInputModal}
           onClose={()=> setIsInputModal(false)}
           stationSlug={stationSlug}
-          onSuccess={async () => {
-            const res = await fetch(`/api/stations?station=${stationSlug}`);
-            const data = await res.json();
-            setList(data);
+          stationsList={stationsList}
+          onSuccess={async (targetStation) => {
             setIsInputModal(false);
+            if (targetStation === stationSlug) {
+              const res = await fetch(`/api/stations?station=${stationSlug}`);
+              const data = await res.json();
+              setList(data);
+            } else {
+              router.refresh();
+              router.push(`/station/${targetStation}`);
+            }
           }}
         />
         <h2 className={styles['station_title']}>{stationName}のおすすめ</h2>

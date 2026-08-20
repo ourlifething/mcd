@@ -7,13 +7,14 @@ export default function Header() {
   return (
     <div className={styles["header-title-wrapper"]}>
       <Link href={"/"} className={styles["my-img"]}>
-        <Image
+        {/* <Image
           src="/images/8cat.png"
           alt="プロフ画像"
           className={styles["my-img"]}
           width={100}
           height={100}
-        />
+        /> */}
+        <h1>MCG DESIGN</h1>
       </Link>
       <div className={styles["header-title"]}>
         {/* <h1>MCG DESIGN</h1> */}

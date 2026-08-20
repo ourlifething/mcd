@@ -4,8 +4,7 @@ import { getMongoClient } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
-
-const allowedStations = ['meguro', 'musashikoyama', 'fudoumae', 'nishikoyama'];
+import { getAllowedStations } from "@/lib/stations";
 
 export async function POST (req: Request) {
   try {
@@ -23,6 +22,7 @@ export async function POST (req: Request) {
     }
 
     // 駅情報のバリデーション
+    const allowedStations = await getAllowedStations();
     if (!station || !allowedStations.includes(station)) {
       return NextResponse.json({ error: "不正な駅情報です" }, { status: 400 });
     }
@@ -102,6 +102,7 @@ export async function GET (req: Request) {
   const { searchParams } = new URL(req.url);
   const station = searchParams.get('station');
 
+  const allowedStations = await getAllowedStations();
   if (!station || !allowedStations.includes(station)) {
     return NextResponse.json([], { status: 200 });
   }

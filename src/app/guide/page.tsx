@@ -1,72 +1,47 @@
 import styles from '@/styles/guide.module.css'
 import Link from 'next/link';
 import { FaAngleRight } from "react-icons/fa6";
-import Station from './components/station';
-import descriptionStation from '@/app/guide/components/descriptionStations.json'
+import StationSearchSelector from './components/StationSearchSelector';
+import FeaturedStations from './components/FeaturedStations';
+import { getStationMaster } from '@/lib/stations';
 
+export const dynamic = 'force-dynamic';
 
-export default function Guide () {
-  const imageSrcMeguro = '/images/station/meguro.webp'
-  const imageSrcFudoumae = '/images/station/fudoumae.webp'
-  const imageSrcMusashikoyama = '/images/station/musashikoyama.webp'
-  const imageSrcNishikoyama = '/images/station/nishikoyama.webp'
+export default async function Guide () {
+  const stations = await getStationMaster();
 
   return (
-    <div className={styles['guide_root']}>
-      <h2 className={styles['guide_h2']}>目黒　武蔵小山　西小山ローカルガイド</h2>
-      <p className={styles['guide_description']}>目黒、不動前、武蔵小山、西小山には魅力的なスポットがたくさん。おすすめのレストランや商店を訪れて、街の新たな魅力を発見しよう！</p>
-      <nav className='bread'>
+    <div className={styles['guide_root']} style={{ backgroundColor: '#fff', color: '#111' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '30px 40px', borderBottom: '1px solid #eaeaea' }}>
+        <h1 style={{ fontSize: '16px', fontWeight: '500', letterSpacing: '0.1em', margin: 0 }}>LOCAL GUIDE</h1>
         <Link 
-          className='back_home'
-          href={'/'}>Home<FaAngleRight />
+          href="/" 
+          style={{ fontSize: '14px', letterSpacing: '0.1em', color: '#111', textDecoration: 'none' }}
+        >
+          HOME
         </Link>
-        <Link
-        className='back_home'
-        href={'banner'}
-        >banner</Link>
-      </nav>
-      <section className={styles['guide_block']}>
-        <ul className={styles['guide_container']}>
-          <li className={styles['guide_station_wrapper']}>
+      </header>
 
-            <Station
-              stationName={'目黒駅'}
-              stationLine={'山手線・目黒線・南北線・三田線'}
-              stationDescription={descriptionStation.meguro}
-              imageSrc={imageSrcMeguro}
-              stationPathName='/station/meguro'
-            />
-          </li>
-          <li className={styles['guide_station_wrapper_odd']}>
-            <Station
-              stationName={'不動前駅'}
-              stationLine={'目黒線'}
-              stationDescription={descriptionStation.fudoumae}
-              imageSrc={imageSrcFudoumae}
-              stationPathName='/station/fudoumae'
-            />
-          </li>
-          <li className={styles['guide_station_wrapper']}>
-            <Station
-              stationName={'武蔵小山駅'}
-              stationLine={'目黒線'}
-              stationDescription={descriptionStation.musashikoyama}
-              imageSrc={imageSrcMusashikoyama}
-              stationPathName='/station/musashikoyama'
-            />
-          </li>
-          <li className={styles['guide_station_wrapper_odd']}>
-            <Station
-              stationName={'西小山駅'}
-              stationLine={'目黒線'}
-              stationDescription={descriptionStation.nishikoyama}
-              imageSrc={imageSrcNishikoyama}
-              stationPathName='/station/nishikoyama'
-            />
-          </li>
-        </ul>
+      <div style={{ maxWidth: '1180px', width: '100%', margin: '0 auto', padding: '60px 20px 20px 20px', boxSizing: 'border-box' }}>
+        <h2 style={{ fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: '300', letterSpacing: '0.08em', margin: '0 0 16px 0', color: '#111' }}>
+          街を探す。
+        </h2>
+        <p style={{ fontSize: '15px', color: '#666', letterSpacing: '0.05em', margin: '0 0 40px 0', lineHeight: '1.6' }}>
+          目黒・不動前・武蔵小山・西小山周辺のショップやスポットを網羅したローカルガイド。
+        </p>
+
+        <StationSearchSelector stations={stations} />
+      </div>
+
+      <section style={{ padding: '40px 0 80px 0' }}>
+        <div style={{ maxWidth: '1180px', margin: '0 auto', padding: '0 20px 24px 20px' }}>
+          <h3 style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#666', fontWeight: '500', margin: 0 }}>
+            FEATURED STATIONS
+          </h3>
+        </div>
+
+        <FeaturedStations stations={stations} />
       </section>
-
     </div>
   );
 };
