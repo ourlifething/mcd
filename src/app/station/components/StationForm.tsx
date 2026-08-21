@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "@/styles/station.module.css"
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import EditModal from '@/app/station/components/EditModal'
 import InputModal from './InputModal';
 import { StationItem, StationMaster } from '@/lib/stations';
@@ -29,43 +30,149 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
   const [isInputModal, setIsInputModal] = useState(false)
   const [currentEdit, setCurrentEdit] = useState<StationItem | null>(null)
   const [lists, setList] = useState<StationItem[]>(initialList)
+  const [likedIds, setLikedIds] = useState<string[]>([]);
+  const [likingId, setLikingId] = useState<string | null>(null);
   const router = useRouter();
 
-  const renderTextWithLinks = (text: string) => {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const parts = text.split(urlRegex);
-    return parts.map((part, i) => {
-      if (part.match(urlRegex)) {
-        return (
-          <a
-            key={i}
-            href={part}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: '#38C2C2', textDecoration: 'underline', wordBreak: 'break-all' }}
-          >
-            {part}
-          </a>
-        );
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('likedStationPosts');
+      if (saved) {
+        setLikedIds(JSON.parse(saved));
       }
-      return part;
+    } catch (e) {
+      console.error('Failed to load liked posts from localStorage:', e);
+    }
+  }, []);
+
+  const handleLike = async (id: string) => {
+    if (likedIds.includes(id) || likingId === id) return;
+
+    setLikingId(id);
+    try {
+      const res = await fetch(`/api/stations/${id}/like`, {
+        method: 'POST',
+      });
+
+      if (!res.ok) {
+        setLikingId(null);
+        return;
+      }
+
+      const data = await res.json();
+      const newLikes = data.likes;
+
+      // listsの該当アイテムのlikesを更新
+      setList(prev => prev.map(item => item._id === id ? { ...item, likes: newLikes } : item));
+
+      // localStorage更新
+      const updatedLiked = [...likedIds, id];
+      setLikedIds(updatedLiked);
+      localStorage.setItem('likedStationPosts', JSON.stringify(updatedLiked));
+    } catch (error) {
+      console.error('Like request failed:', error);
+    } finally {
+      setLikingId(null);
+    }
+  };
+
+  const renderTextWithLinks = (text: string, links?: StationLink[]) => {
+    if (!links || links.length === 0) {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(urlRegex);
+      return parts.map((part, i) => {
+        if (part.match(urlRegex)) {
+          return (
+            <a
+              key={i}
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#111', textDecoration: 'underline', wordBreak: 'break-all' }}
+            >
+              {part}
+            </a>
+          );
+        }
+        return part;
+      });
+    }
+
+    let elements: (string | React.ReactNode)[] = [text];
+
+    for (const link of links) {
+      const newElements: (string | React.ReactNode)[] = [];
+      for (const el of elements) {
+        if (typeof el === 'string') {
+          const index = el.indexOf(link.text);
+          if (index !== -1) {
+            const before = el.substring(0, index);
+            const match = el.substring(index, index + link.text.length);
+            const after = el.substring(index + link.text.length);
+
+            if (before) newElements.push(before);
+            newElements.push(
+              <a
+                key={link.url + '-' + index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#111', textDecoration: 'underline', wordBreak: 'break-all' }}
+              >
+                {match}
+              </a>
+            );
+            if (after) newElements.push(after);
+          } else {
+            newElements.push(el);
+          }
+        } else {
+          newElements.push(el);
+        }
+      }
+      elements = newElements;
+    }
+
+    return elements.map((el, idx) => {
+      if (typeof el === 'string') {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const parts = el.split(urlRegex);
+        return parts.map((part, i) => {
+          if (part.match(urlRegex)) {
+            return (
+              <a
+                key={`auto-${idx}-${i}`}
+                href={part}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#111', textDecoration: 'underline', wordBreak: 'break-all' }}
+              >
+                {part}
+              </a>
+            );
+          }
+          return part;
+        });
+      }
+      return el;
     });
   };
 
   return (
     <>
       <div className={styles['station_wrapper']}>
-        <div style={{ marginBottom: '16px' }}>
-          <Link href="/guide" style={{ fontSize: '14px', color: '#333', textDecoration: 'underline', letterSpacing: '0.05em' }}>
-            &larr; 駅一覧へ戻る
+        <div className={styles['station_header_top']}>
+          <Link href="/guide" className={styles['back_link']}>
+            &larr; GUIDE
           </Link>
+          <button 
+            onClick={()=> setIsInputModal(true)}
+            className={styles['station_input_btn']}
+          >
+              + ADD
+          </button>
         </div>
-        <button 
-          onClick={()=> setIsInputModal(true)}
-          className={styles['station_input_btn']}
-        >
-            訪問情報を入力する
-        </button>
+
         <InputModal
           isOpen={isInputModal}
           onClose={()=> setIsInputModal(false)}
@@ -83,13 +190,20 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
             }
           }}
         />
-        <h2 className={styles['station_title']}>{stationName}のおすすめ</h2>
+
+        <div className={styles['station_hero']}>
+          <h1 className={styles['station_slug_title']}>{stationSlug}</h1>
+          <div className={styles['station_name_sub']}>{stationName}</div>
+          <p className={styles['station_archive_label']}>TOKYO / LOCAL ARCHIVE</p>
+        </div>
+
+        <div className={styles['station_divider']}></div>
       </div>
 
       <section>
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {} }
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className={styles['motion-div']}
@@ -100,20 +214,24 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
                 key={list._id }
                 className={styles['station_list_block']}
               >
+                <div className={styles['entry_number']}>
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+
                 {list.imageUrl && (
-                  <div style={{ width: '100%', aspectRatio: '4 / 5', marginBottom: '12px', overflow: 'hidden', borderRadius: '4px', position: 'relative' }}>
+                  <div className={styles['image_container']}>
                     <Image 
                       src={list.imageUrl} 
                       alt={list.name} 
                       fill
-                      sizes="(max-width: 600px) 100vw, (max-width: 1080px) 50vw, 240px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       priority={index < 3}
-                      style={{ objectFit: 'cover' }} 
+                      className={styles['station_image']}
                     />
                   </div>
                 )}
                 {list.rating && (
-                  <div style={{ fontSize: '12px', color: '#666', marginBottom: '6px', fontWeight: '500', letterSpacing: '0.05em' }}>
+                  <div className={styles['station_rating']}>
                     ★ {list.rating}
                   </div>
                 )}
@@ -121,14 +239,31 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
                   {list.name}
                 </div>
                 <div className={styles['station_list_text']}>
-                  {renderTextWithLinks(list.text)}
+                  {renderTextWithLinks(list.text, list.links)}
                 </div>
-                <button 
-                  onClick={()=> { setCurrentEdit(list), setIsModalOpen(true) }}
-                  className={styles['station_edit_button']}
-                >
-                  編集
-                </button>
+                
+                <div className={styles['station_card_footer']}>
+                  <button 
+                    onClick={()=> { setCurrentEdit(list), setIsModalOpen(true) }}
+                    className={styles['station_edit_button']}
+                  >
+                    EDIT
+                  </button>
+
+                  <button
+                    onClick={() => handleLike(list._id)}
+                    disabled={likingId === list._id}
+                    className={styles['like_button']}
+                    title={likedIds.includes(list._id) ? "いいね済み" : "いいねする"}
+                  >
+                    {likedIds.includes(list._id) ? (
+                      <AiFillHeart className={`${styles['heart_icon']} ${styles['liked']}`} />
+                    ) : (
+                      <AiOutlineHeart className={styles['heart_icon']} />
+                    )}
+                    <span className={styles['like_count']}>{list.likes ?? 0}</span>
+                  </button>
+                </div>
               </li>
             ))}
             {/** modal */}

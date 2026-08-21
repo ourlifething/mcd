@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 export async function PUT (request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const body = await request.json();
-    const { name, text, password } = body;
+    const { name, text, password, links: rawLinks } = body;
 
     // パスワード検証
     if (!password || password !== process.env.POST_PASSWORD) {
@@ -24,13 +24,32 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: "コメントは100文字以内で入力してください" }, { status: 400 });
     }
 
+    let links: { text: string; url: string; }[] = [];
+    if (rawLinks && Array.isArray(rawLinks)) {
+      links = rawLinks.map((l: any) => ({
+        text: String(l.text || '').trim(),
+        url: String(l.url || '').trim(),
+      })).filter(l => l.text && l.url);
+
+      for (const l of links) {
+        try {
+          const parsedUrl = new URL(l.url);
+          if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+            return NextResponse.json({ error: "無効なURLスキームが含まれています（http/httpsのみ許可）" }, { status: 400 });
+          }
+        } catch {
+          return NextResponse.json({ error: "無効なURL形式が含まれています" }, { status: 400 });
+        }
+      }
+    }
+
     const client = await getMongoClient();
     const db = client.db('portfolioDB');
     const collection = db.collection('stations')
 
     const result = await collection.updateOne(
       { _id: new ObjectId(params.id) },
-      { $set: { name: name.trim(), text: text.trim() } }
+      { $set: { name: name.trim(), text: text.trim(), links } }
     );
     return NextResponse.json({ message: '更新完了', result });
   } catch (error: any) {

@@ -1,6 +1,6 @@
 'use client'
-import { useState } from 'react';
-import { StationMaster } from '@/lib/stations';
+import { useState, useRef } from 'react';
+import { StationMaster, StationLink } from '@/lib/stations';
 import { useRouter } from 'next/navigation';
 
 type Props = { 
@@ -21,6 +21,57 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [rating, setRating] = useState<'おすすめ' | 'かなりおすすめ'>('おすすめ');
+  const [links, setLinks] = useState<StationLink[]>([]);
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [linkText, setLinkText] = useState('');
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkError, setLinkError] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleOpenLinkModal = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    if (start === end) {
+      alert('リンクを設定する文字列を選択してください');
+      return;
+    }
+    const selected = text.substring(start, end);
+    if (!selected.trim()) {
+      alert('有効な文字列を選択してください');
+      return;
+    }
+    setLinkText(selected);
+    setLinkUrl('');
+    setLinkError('');
+    setLinkModalOpen(true);
+  };
+
+  const handleAddLink = () => {
+    const trimmedUrl = linkUrl.trim();
+    if (!trimmedUrl) {
+      setLinkError('URLを入力してください');
+      return;
+    }
+    try {
+      const parsed = new URL(trimmedUrl);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        setLinkError('http:// または https:// のみを許可しています');
+        return;
+      }
+    } catch {
+      setLinkError('有効なURLを入力してください');
+      return;
+    }
+
+    setLinks(prev => [...prev.filter(l => l.text !== linkText), { text: linkText, url: trimmedUrl }]);
+    setLinkModalOpen(false);
+  };
+
+  const handleRemoveLink = (targetText: string) => {
+    setLinks(prev => prev.filter(l => l.text !== targetText));
+  };
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [optimizeMessage, setOptimizeMessage] = useState('');
   const router = useRouter();
@@ -129,6 +180,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
     formData.append('rating', rating);
     formData.append('password', password);
     formData.append('station', selectedStation);
+    formData.append('links', JSON.stringify(links));
     if (selectedImage) {
       formData.append('image', selectedImage);
     }
@@ -156,6 +208,7 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
       setSelectedImage(null); 
       setImagePreview(null); 
       setRating('おすすめ');
+      setLinks([]);
       if (onSuccess) {
         onSuccess(selectedStation);
       }
@@ -235,20 +288,103 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <label style={{ ...s.label, marginBottom: 0 }}>コメント</label>
-              <span style={{ fontSize: '11px', color: '#666' }}>{text.length} / 100</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button
+                  type="button"
+                  onClick={handleOpenLinkModal}
+                  style={{
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '3px',
+                    padding: '2px 8px',
+                    fontSize: '11px',
+                    cursor: 'pointer',
+                    color: '#333',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  🔗 LINK
+                </button>
+                <span style={{ fontSize: '11px', color: '#666' }}>{text.length} / 100</span>
+              </div>
             </div>
             <textarea 
+              ref={textareaRef}
               placeholder="コメントを入力（100文字まで）" 
               value={text} 
               onChange={(e) => {
-                if (e.target.value.length <= 100) {
-                  setText(e.target.value);
+                const val = e.target.value;
+                if (val.length <= 100) {
+                  setText(val);
+                  setLinks(prev => prev.filter(l => val.includes(l.text)));
                 }
               }} 
               rows={4} 
               style={s.textarea} 
             />
+            {links.length > 0 && (
+              <div style={{ marginTop: '8px', fontSize: '12px', color: '#555' }}>
+                <div style={{ fontWeight: '500', marginBottom: '4px' }}>設定されたリンク:</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {links.map((l, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f9f9f9', padding: '4px 8px', borderRadius: '3px', border: '1px solid #eee' }}>
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '300px' }}>
+                        「{l.text}」 → {l.url}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveLink(l.text)}
+                        style={{ background: 'none', border: 'none', color: '#999', cursor: 'pointer', fontSize: '12px' }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+
+          {linkModalOpen && (
+            <div style={{
+              position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+              backgroundColor: 'rgba(0,0,0,0.3)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1100
+            }}>
+              <div style={{ backgroundColor: '#fff', padding: '24px', borderRadius: '4px', width: '90%', maxWidth: '360px', boxShadow: '0 4px 20px rgba(0,0,0,0.15)' }}>
+                <h3 style={{ fontSize: '14px', fontWeight: '500', marginBottom: '12px', letterSpacing: '0.05em' }}>リンクを設定</h3>
+                <div style={{ marginBottom: '12px', fontSize: '12px', color: '#666' }}>
+                  選択文字列: <strong style={{ color: '#111' }}>「{linkText}」</strong>
+                </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px', color: '#333' }}>URL (https:// または http://)</label>
+                  <input
+                    type="text"
+                    placeholder="https://example.com"
+                    value={linkUrl}
+                    onChange={(e) => setLinkUrl(e.target.value)}
+                    style={{ width: '100%', padding: '8px 10px', fontSize: '13px', border: '1px solid #ccc', borderRadius: '3px', boxSizing: 'border-box' }}
+                  />
+                  {linkError && <div style={{ fontSize: '11px', color: '#c00', marginTop: '4px' }}>{linkError}</div>}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                  <button
+                    type="button"
+                    onClick={() => setLinkModalOpen(false)}
+                    style={{ padding: '6px 12px', fontSize: '12px', background: 'none', border: '1px solid #ccc', borderRadius: '3px', cursor: 'pointer' }}
+                  >
+                    キャンセル
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleAddLink}
+                    style={{ padding: '6px 12px', fontSize: '12px', backgroundColor: '#111', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
+                  >
+                    リンクを設定
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div>
             <label style={s.label}>パスワード</label>

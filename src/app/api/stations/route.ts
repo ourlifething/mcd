@@ -15,6 +15,34 @@ export async function POST (req: Request) {
     const password = formData.get('password') as string;
     const station = formData.get('station') as string;
     const imageFile = formData.get('image') as File | null;
+    const linksRaw = formData.get('links') as string;
+
+    let links: { text: string; url: string; }[] = [];
+    if (linksRaw) {
+      try {
+        const parsed = JSON.parse(linksRaw);
+        if (Array.isArray(parsed)) {
+          links = parsed.map((l: any) => ({
+            text: String(l.text || '').trim(),
+            url: String(l.url || '').trim(),
+          })).filter(l => l.text && l.url);
+
+          // URLスキームのセキュリティ検証 (http / https のみ許可)
+          for (const l of links) {
+            try {
+              const parsedUrl = new URL(l.url);
+              if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+                return NextResponse.json({ error: "無効なURLスキームが含まれています（http/httpsのみ許可）" }, { status: 400 });
+              }
+            } catch {
+              return NextResponse.json({ error: "無効なURL形式が含まれています" }, { status: 400 });
+            }
+          }
+        }
+      } catch (e) {
+        return NextResponse.json({ error: "リンクデータの解析に失敗しました" }, { status: 400 });
+      }
+    }
 
     // パスワード検証
     if (!password || password !== process.env.POST_PASSWORD) {
@@ -88,6 +116,8 @@ export async function POST (req: Request) {
       rating,
       imageUrl,
       station,
+      links,
+      likes: 0,
     };
 
     const result = await collection.insertOne(newData);

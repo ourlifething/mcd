@@ -1,5 +1,10 @@
 import { getMongoClient } from "./mongodb";
 
+export type StationLink = {
+  text: string;
+  url: string;
+};
+
 export type StationItem = {
   _id: string;
   name: string;
@@ -7,6 +12,8 @@ export type StationItem = {
   imageUrl?: string;
   rating?: string;
   station?: string;
+  likes?: number;
+  links?: StationLink[];
 };
 
 export type StationMaster = {
@@ -91,6 +98,8 @@ export async function getStationsBySlug(
       imageUrl: item.imageUrl,
       rating: item.rating,
       station: item.station,
+      likes: item.likes ?? 0,
+      links: item.links ?? [],
     }));
   } catch (error) {
     console.error("Failed to fetch stations:", error);
