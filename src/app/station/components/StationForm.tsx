@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import EditModal from '@/app/station/components/EditModal'
 import InputModal from './InputModal';
-import { StationItem, StationMaster } from '@/lib/stations';
+import { StationItem, StationMaster, StationLink } from '@/lib/stations';
 /**
  * 入力フォーム
  */
