@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState, useRef, useEffect } from 'react';
 import styles from '@/styles/modal.module.css';
 import { StationLink } from '@/lib/stations';
 
-type EI = { _id: string; name: string; text: string; links?: StationLink[]; };
+type EI = { _id: string; name: string; text: string; links?: StationLink[]; imageUrl?: string; imageUrls?: string[]; };
 type Props = {
   isOpen: boolean; currentEdit: EI | null;
   setCurrentEdit: Dispatch<SetStateAction<EI | null>>;

@@ -10,6 +10,7 @@ export type StationItem = {
   name: string;
   text: string;
   imageUrl?: string;
+  imageUrls?: string[];
   rating?: string;
   station?: string;
   likes?: number;

@@ -3,11 +3,18 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { getMongoClient } from "@/lib/mongodb";
 import { ObjectId } from 'mongodb';
+import { put } from '@vercel/blob';
+import sharp from 'sharp';
 
 export async function PUT (request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const body = await request.json();
-    const { name, text, password, links: rawLinks } = body;
+    const formData = await request.formData();
+    const name = formData.get('name') as string;
+    const text = formData.get('text') as string;
+    const password = formData.get('password') as string;
+    const linksRaw = formData.get('links') as string;
+    const existingUrlsRaw = formData.get('existingUrls') as string;
+    const newImageFiles = formData.getAll('images') as File[];
 
     // パスワード検証
     if (!password || password !== process.env.POST_PASSWORD) {
@@ -25,22 +32,44 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
     }
 
     let links: { text: string; url: string; }[] = [];
-    if (rawLinks && Array.isArray(rawLinks)) {
-      links = rawLinks.map((l: any) => ({
-        text: String(l.text || '').trim(),
-        url: String(l.url || '').trim(),
-      })).filter(l => l.text && l.url);
-
-      for (const l of links) {
-        try {
-          const parsedUrl = new URL(l.url);
-          if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
-            return NextResponse.json({ error: "無効なURLスキームが含まれています（http/httpsのみ許可）" }, { status: 400 });
-          }
-        } catch {
-          return NextResponse.json({ error: "無効なURL形式が含まれています" }, { status: 400 });
+    if (linksRaw) {
+      try {
+        const parsed = JSON.parse(linksRaw);
+        if (Array.isArray(parsed)) {
+          links = parsed.map((l: any) => ({
+            text: String(l.text || '').trim(),
+            url: String(l.url || '').trim(),
+          })).filter(l => l.text && l.url);
         }
-      }
+      } catch {}
+    }
+
+    const existingUrls: string[] = existingUrlsRaw ? JSON.parse(existingUrlsRaw) : [];
+    
+    if (existingUrls.length + newImageFiles.length > 3) {
+        return NextResponse.json({ error: "画像は最大3枚までです" }, { status: 400 });
+    }
+
+    const imageUrls = [...existingUrls];
+    for (const imageFile of newImageFiles) {
+        if (imageFile.size > 0) {
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!allowedTypes.includes(imageFile.type)) continue;
+
+            if (imageFile.size > 5 * 1024 * 1024) continue;
+
+            const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}-upload.webp`;
+            const buffer = Buffer.from(await imageFile.arrayBuffer());
+
+            const metadata = await sharp(buffer).metadata();
+            let sharpInstance = sharp(buffer);
+            if (metadata.width && metadata.width > 800) {
+              sharpInstance = sharpInstance.resize(800, null, { fit: 'inside', withoutEnlargement: true });
+            }
+            const resizedBuffer = await sharpInstance.webp({ quality: 80 }).toBuffer();
+            const blob = await put(filename, resizedBuffer, { access: 'public' });
+            imageUrls.push(blob.url);
+        }
     }
 
     const client = await getMongoClient();
@@ -49,7 +78,7 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
 
     const result = await collection.updateOne(
       { _id: new ObjectId(params.id) },
-      { $set: { name: name.trim(), text: text.trim(), links } }
+      { $set: { name: name.trim(), text: text.trim(), links, imageUrls } }
     );
     return NextResponse.json({ message: '更新完了', result });
   } catch (error: any) {

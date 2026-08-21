@@ -18,8 +18,8 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
   const [text, setText] = useState('');
   const [password, setPassword] = useState('');
   const [selectedStation, setSelectedStation] = useState(stationSlug);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [rating, setRating] = useState<'おすすめ' | 'かなりおすすめ'>('おすすめ');
   const [links, setLinks] = useState<StationLink[]>([]);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
@@ -143,18 +143,33 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const files = e.target.files;
+    if (files) {
+      const fileList = Array.from(files);
+      if (selectedImages.length + fileList.length > 3) {
+        alert('最大3枚までです');
+        return;
+      }
+
       setIsSubmitting(true);
       setOptimizeMessage('画像を最適化しています…');
       try {
-        const compressedFile = await compressImage(file);
-        setSelectedImage(compressedFile);
-        setImagePreview(URL.createObjectURL(compressedFile));
-      } catch (err) {
-        console.error('画像圧縮エラー:', err);
-        setSelectedImage(file);
-        setImagePreview(URL.createObjectURL(file));
+        const newSelectedImages = [...selectedImages];
+        const newImagePreviews = [...imagePreviews];
+        
+        for (const file of fileList) {
+          try {
+            const compressedFile = await compressImage(file);
+            newSelectedImages.push(compressedFile);
+            newImagePreviews.push(URL.createObjectURL(compressedFile));
+          } catch (err) {
+            console.error('画像圧縮エラー:', err);
+            newSelectedImages.push(file);
+            newImagePreviews.push(URL.createObjectURL(file));
+          }
+        }
+        setSelectedImages(newSelectedImages);
+        setImagePreviews(newImagePreviews);
       } finally {
         setIsSubmitting(false);
         setOptimizeMessage('');
@@ -181,8 +196,8 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
     formData.append('password', password);
     formData.append('station', selectedStation);
     formData.append('links', JSON.stringify(links));
-    if (selectedImage) {
-      formData.append('image', selectedImage);
+    for (const img of selectedImages) {
+      formData.append('images', img);
     }
 
     try {
@@ -205,8 +220,8 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
       setName(''); 
       setText(''); 
       setPassword('');
-      setSelectedImage(null); 
-      setImagePreview(null); 
+      setSelectedImages([]); 
+      setImagePreviews([]); 
       setRating('おすすめ');
       setLinks([]);
       if (onSuccess) {
@@ -246,15 +261,61 @@ export default function InputModal ({ isOpen, onClose, onSuccess, stationSlug, s
 
         <form onSubmit={handleSubmit} style={s.form}>
           <div>
-            <label style={s.label}>店舗写真</label>
-            <label style={s.dropzone}>
-              {imagePreview ? (
-                <img src={imagePreview} alt="プレビュー" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                <span style={{ fontSize: '13px', color: '#666', letterSpacing: '0.05em' }}>写真を追加</span>
-              )}
-              <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange} style={{ display: 'none' }} />
-            </label>
+          <div>
+            <label style={s.label}>店舗写真 ({selectedImages.length}/3)</label>
+            
+            {/* プレビュー表示エリア */}
+            {imagePreviews.length > 0 && (
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                {imagePreviews.map((preview, index) => (
+                  <div key={index} style={{ position: 'relative', width: '80px', height: '80px' }}>
+                    <img
+                      src={preview}
+                      alt="プレビュー"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newImages = selectedImages.filter((_, i) => i !== index);
+                        const newPreviews = imagePreviews.filter((_, i) => i !== index);
+                        setSelectedImages(newImages);
+                        setImagePreviews(newPreviews);
+                      }}
+                      style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#333', color: '#fff', borderRadius: '50%', border: 'none', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 画像追加ボタン */}
+            {selectedImages.length < 3 && (
+              <label style={{ 
+                width: '100%', 
+                height: '60px', 
+                border: '1px dashed #ccc', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                cursor: 'pointer', 
+                fontSize: '13px', 
+                color: '#666', 
+                letterSpacing: '0.1em', 
+                borderRadius: '4px',
+                backgroundColor: '#fafafa',
+                transition: 'border-color 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.borderColor = '#111'}
+              onMouseOut={(e) => e.currentTarget.style.borderColor = '#ccc'}
+              >
+                INPUT IMAGE
+                <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange} style={{ display: 'none' }} />
+              </label>
+            )}
+          </div>
           </div>
 
           <div>

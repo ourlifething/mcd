@@ -14,7 +14,7 @@ export async function POST (req: Request) {
     const rating = formData.get('rating') as string;
     const password = formData.get('password') as string;
     const station = formData.get('station') as string;
-    const imageFile = formData.get('image') as File | null;
+    const imageFiles = formData.getAll('images') as File[];
     const linksRaw = formData.get('links') as string;
 
     let links: { text: string; url: string; }[] = [];
@@ -27,7 +27,6 @@ export async function POST (req: Request) {
             url: String(l.url || '').trim(),
           })).filter(l => l.text && l.url);
 
-          // URLスキームのセキュリティ検証 (http / https のみ許可)
           for (const l of links) {
             try {
               const parsedUrl = new URL(l.url);
@@ -69,41 +68,44 @@ export async function POST (req: Request) {
       return NextResponse.json({ error: "不正な評価値です" }, { status: 400 });
     }
 
-    let imageUrl = "";
-    if (imageFile && imageFile.size > 0) {
-      // 5MB制限 (5 * 1024 * 1024 bytes)
-      if (imageFile.size > 5 * 1024 * 1024) {
-        return NextResponse.json({ error: "画像サイズが大きすぎます。5MB以下の画像を選択してください。" }, { status: 400 });
+    if (imageFiles.length > 3) {
+      return NextResponse.json({ error: "画像は最大3枚までです" }, { status: 400 });
+    }
+
+    const imageUrls: string[] = [];
+    for (const imageFile of imageFiles) {
+      if (imageFile && imageFile.size > 0) {
+        // 5MB制限
+        if (imageFile.size > 5 * 1024 * 1024) {
+          return NextResponse.json({ error: "画像サイズが大きすぎます。5MB以下の画像を選択してください。" }, { status: 400 });
+        }
+
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!allowedTypes.includes(imageFile.type)) {
+          return NextResponse.json({ error: "サポートされていない画像形式です（JPEG, PNG, WebPのみ）" }, { status: 400 });
+        }
+
+        const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}-upload.webp`;
+        const arrayBuffer = await imageFile.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        const metadata = await sharp(buffer).metadata();
+        let sharpInstance = sharp(buffer);
+
+        if (metadata.width && metadata.width > 800) {
+          sharpInstance = sharpInstance.resize(800, null, {
+            fit: 'inside',
+            withoutEnlargement: true,
+          });
+        }
+
+        const resizedBuffer = await sharpInstance
+          .webp({ quality: 80 })
+          .toBuffer();
+
+        const blob = await put(filename, resizedBuffer, { access: 'public' });
+        imageUrls.push(blob.url);
       }
-
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-      if (!allowedTypes.includes(imageFile.type)) {
-        return NextResponse.json({ error: "サポートされていない画像形式です（JPEG, PNG, WebPのみ）" }, { status: 400 });
-      }
-
-      // 新規ファイル名は .webp に統一
-      const filename = `${Date.now()}-upload.webp`;
-      const arrayBuffer = await imageFile.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-
-      // 画像のメタデータを取得して幅を確認
-      const metadata = await sharp(buffer).metadata();
-      let sharpInstance = sharp(buffer);
-
-      if (metadata.width && metadata.width > 800) {
-        sharpInstance = sharpInstance.resize(800, null, {
-          fit: 'inside',
-          withoutEnlargement: true,
-        });
-      }
-
-      // WebPへ変換 (品質80)
-      const resizedBuffer = await sharpInstance
-        .webp({ quality: 80 })
-        .toBuffer();
-
-      const blob = await put(filename, resizedBuffer, { access: 'public' });
-      imageUrl = blob.url;
     }
 
     const client = await getMongoClient();
@@ -114,7 +116,7 @@ export async function POST (req: Request) {
       name: name.trim(),
       text: text.trim(),
       rating,
-      imageUrl,
+      imageUrls,
       station,
       links,
       likes: 0,

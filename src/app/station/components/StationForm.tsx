@@ -218,16 +218,20 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
                   {String(index + 1).padStart(2, '0')}
                 </div>
 
-                {list.imageUrl && (
-                  <div className={styles['image_container']}>
-                    <Image 
-                      src={list.imageUrl} 
-                      alt={list.name} 
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-                      priority={index < 3}
-                      className={styles['station_image']}
-                    />
+                { (list.imageUrls?.length ? list.imageUrls : (list.imageUrl ? [list.imageUrl] : [])).length > 0 && (
+                  <div className={styles['station_image_slider']}>
+                    {(list.imageUrls?.length ? list.imageUrls : (list.imageUrl ? [list.imageUrl] : [])).map((url, i) => (
+                      <div key={i} className={styles['station_image_slide']}>
+                        <Image 
+                          src={url} 
+                          alt={`${list.name} - ${i + 1}`} 
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          priority={index < 3}
+                          className={styles['station_image']}
+                        />
+                      </div>
+                    ))}
                   </div>
                 )}
                 {list.rating && (
