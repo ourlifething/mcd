@@ -64,16 +64,21 @@ export default function EditModal({ isOpen, currentEdit, setCurrentEdit, onClose
     }
 
     setIsSubmitting(true);
+    
+    const formData = new FormData();
+    formData.append('name', currentEdit.name.trim());
+    formData.append('text', currentEdit.text.trim());
+    formData.append('links', JSON.stringify(links));
+    formData.append('password', password);
+    // 必要に応じて既存の画像URLも送信する（API側が `existingUrls` を期待しているため）
+    if (currentEdit.imageUrls) {
+      formData.append('existingUrls', JSON.stringify(currentEdit.imageUrls));
+    }
+
     try {
       const res = await fetch(`/api/stations/${currentEdit._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          name: currentEdit.name.trim(), 
-          text: currentEdit.text.trim(),
-          links,
-          password 
-        }),
+        body: formData,
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
