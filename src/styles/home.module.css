@@ -9,6 +9,9 @@
   justify-content: flex-start;
   background-image: linear-gradient(45deg, rgb(240, 244, 244), #f4fcfc);
 }
+.header-title-wrapper h1 {
+  width: 400px;
+}
 
 @media screen and (max-width: 768px) {
   .header-title-wrapper {
@@ -33,7 +36,7 @@
 
 .my-img {
   width: 100px;
-  height: 100px;
+  height: 40px;
   box-sizing: content-box;
   object-fit: cover;
   border-radius: 50%;
@@ -43,7 +46,7 @@
 @media screen and (max-width: 768px) {
   .my-img {
     width: 100px;
-    height: 100px;
+    height: 60px;
     object-fit: cover;
     box-sizing: content-box;
     padding: 2%;
@@ -103,7 +106,7 @@
 }
 .iconps {
   padding-top: 5px;
-  width:42px;
+  width: 42px;
   height: auto;
   margin-right: 8px;
 }
@@ -165,7 +168,7 @@
   display: flex;
   column-gap: 30px;
   padding: 0 2%;
-  max-width:1080px;
+  max-width: 1080px;
   margin: 0 auto;
 }
 
@@ -178,7 +181,7 @@
 .pict-block-wrapper h3 {
   margin: 0 auto 0 0;
   margin-bottom: 10px;
-  color:#f4fcfc;
+  color: #f4fcfc;
   background: #38c2c2;
   padding: 8px 30px;
   font-weight: 700;
@@ -261,27 +264,30 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 100;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0s 0.3s ease; 
-  
+  transition:
+    opacity 0.3s ease,
+    visibility 0s 0.3s ease;
 }
 .modal-overlay.show {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease, visibility 0s 0s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s 0s ease;
 }
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 0 20px;
 }
 .modal-image {

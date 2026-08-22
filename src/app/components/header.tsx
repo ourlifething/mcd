@@ -16,19 +16,19 @@ export default function Header() {
         /> */}
         <h1>MCG DESIGN</h1>
       </Link>
-      <div className={styles["header-title"]}>
+      {/* <div className={styles["header-title"]}> */}
         {/* <h1>MCG DESIGN</h1> */}
         {/* <p className={styles['mail-add']}>
           連絡先：
           <a href="mailto:vervewearage@gmail.com" target="_blank" rel="noopener noreferrer">vervewearage@gmail.com</a>
         </p> */}
-      </div>
-      <div className={styles["icon-block"]}>
+      {/* </div> */}
+      {/* <div className={styles["icon-block"]}> */}
         {/* <Image src='/images/illustlator.webp' alt='イラレロゴ' className={styles['icon-ai']} width={173} height={173} />
         <Image src='/images/ps.png' alt='psロゴ' className={styles['iconps']} width={225} height={225}/>
         <Image src='/images/html-css.png' alt='htmlロゴ' className={styles['icon-html']} width={792} height={612}/>
         <Image src='/images/react.png' alt='reactロゴ' className={styles['icon']} width={1000} height={1000}/> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 }

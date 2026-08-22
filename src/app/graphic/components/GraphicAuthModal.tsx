@@ -82,6 +82,10 @@ export default function GraphicAuthModal() {
             {isLoading ? '認証中...' : 'ENTER'}
           </button>
         </form>
+
+        <div className={styles.footer}>
+          <Link href="/" className={styles.homeLink}>HOME</Link>
+        </div>
       </div>
     </div>
   );
