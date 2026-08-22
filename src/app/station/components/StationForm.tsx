@@ -32,7 +32,26 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
   const [lists, setList] = useState<StationItem[]>(initialList)
   const [likedIds, setLikedIds] = useState<string[]>([]);
   const [likingId, setLikingId] = useState<string | null>(null);
+  const [activeIndices, setActiveIndices] = useState<{ [key: string]: number }>({});
   const router = useRouter();
+
+  const handleScroll = (id: string, e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const index = Math.round(container.scrollLeft / container.offsetWidth);
+    if (activeIndices[id] !== index) {
+      setActiveIndices(prev => ({ ...prev, [id]: index }));
+    }
+  };
+
+  const scrollToImage = (id: string, index: number) => {
+    const slider = document.getElementById(`slider-${id}`);
+    if (slider) {
+      slider.scrollTo({
+        left: slider.offsetWidth * index,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   useEffect(() => {
     try {
@@ -219,19 +238,35 @@ export default function StationForm ({ stationName, stationSlug, initialList, st
                 </div>
 
                 { (list.imageUrls?.length ? list.imageUrls : (list.imageUrl ? [list.imageUrl] : [])).length > 0 && (
-                  <div className={styles['station_image_slider']}>
-                    {(list.imageUrls?.length ? list.imageUrls : (list.imageUrl ? [list.imageUrl] : [])).map((url, i) => (
-                      <div key={i} className={styles['station_image_slide']}>
-                        <Image 
-                          src={url} 
-                          alt={`${list.name} - ${i + 1}`} 
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-                          priority={index < 3}
-                          className={styles['station_image']}
+                  <div className={styles['slider_container']}>
+                    <div 
+                      id={`slider-${list._id}`}
+                      className={styles['station_image_slider']}
+                      onScroll={(e) => handleScroll(list._id, e)}
+                    >
+                      {(list.imageUrls?.length ? list.imageUrls : (list.imageUrl ? [list.imageUrl] : [])).map((url, i) => (
+                        <div key={i} className={styles['station_image_slide']}>
+                          <Image 
+                            src={url} 
+                            alt={`${list.name} - ${i + 1}`} 
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                            priority={index < 3}
+                            className={styles['station_image']}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    {/* ページインジケーター */}
+                    <div className={styles['indicator_container']}>
+                      {(list.imageUrls?.length ? list.imageUrls : (list.imageUrl ? [list.imageUrl] : [])).map((_, i) => (
+                        <div 
+                          key={i} 
+                          onClick={() => scrollToImage(list._id, i)}
+                          className={`${styles['indicator_dot']} ${(activeIndices[list._id] || 0) === i ? styles['active'] : ''}`}
                         />
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
                 {list.rating && (

@@ -44,8 +44,15 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
       } catch {}
     }
 
+    // 画像関連のフィールドが今回のリクエストで明示的に送信されたかどうかを判定する。
+    // existingUrls が送信されていない、かつ新規画像ファイルも存在しない場合は
+    // 「画像を編集していないテキストのみの更新」とみなし、既存のDB画像データ
+    // （imageUrl / imageUrls）には一切手を加えない。
+    const hasNewImageFiles = newImageFiles.some((f) => f && f.size > 0);
+    const isImageDataSubmitted = existingUrlsRaw !== null || hasNewImageFiles;
+
     const existingUrls: string[] = existingUrlsRaw ? JSON.parse(existingUrlsRaw) : [];
-    
+
     if (existingUrls.length + newImageFiles.length > 3) {
         return NextResponse.json({ error: "画像は最大3枚までです" }, { status: 400 });
     }
@@ -76,9 +83,20 @@ export async function PUT (request: NextRequest, { params }: { params: { id: str
     const db = client.db('portfolioDB');
     const collection = db.collection('stations')
 
+    // 画像データが今回のリクエストで送信されていない場合は $set から
+    // imageUrls を除外し、既存の imageUrl / imageUrls をそのまま維持する。
+    const updateFields: Record<string, unknown> = {
+      name: name.trim(),
+      text: text.trim(),
+      links,
+    };
+    if (isImageDataSubmitted) {
+      updateFields.imageUrls = imageUrls;
+    }
+
     const result = await collection.updateOne(
       { _id: new ObjectId(params.id) },
-      { $set: { name: name.trim(), text: text.trim(), links, imageUrls } }
+      { $set: updateFields }
     );
     return NextResponse.json({ message: '更新完了', result });
   } catch (error: any) {

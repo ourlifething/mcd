@@ -97,6 +97,7 @@ export async function getStationsBySlug(
       name: item.name,
       text: item.text,
       imageUrl: item.imageUrl,
+      imageUrls: item.imageUrls,
       rating: item.rating,
       station: item.station,
       likes: item.likes ?? 0,

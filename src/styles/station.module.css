@@ -139,6 +139,41 @@
 .station_image_slider::-webkit-scrollbar {
   display: none;
 }
+
+.slider_container {
+  position: relative;
+  width: 100%;
+}
+
+.indicator_container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.indicator_dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  display: block;
+}
+
+.indicator_dot:hover {
+  width: 7px;
+  height: 7px;
+  opacity: 0.9;
+}
+
+.indicator_dot.active {
+  background-color: #666;
+}
+
 .station_image_slide {
   flex: 0 0 100%;
   scroll-snap-align: start;
