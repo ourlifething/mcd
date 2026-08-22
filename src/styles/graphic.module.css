@@ -1,0 +1,195 @@
+/* 
+   MA. - Graphic Gallery
+   Inspired by contemporary minimalist editorial design.
+*/
+
+.document {
+  --ink: #111111;
+  --gray: #999999;
+  --bg-plane: #f6f6f6;
+  --line: #eeeeee;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 40px;
+  color: var(--ink);
+  background: #ffffff;
+  font-family: "Helvetica Neue", Arial, "Hiragino Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+.spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 100px 40px;
+  align-items: start;
+  padding: 180px 0;
+}
+
+.spread:first-child {
+  padding-top: 0;
+}
+
+.breath {
+  min-height: 200px;
+}
+
+.number {
+  position: absolute;
+  top: 40px;
+  right: -10px;
+  font-size: clamp(100px, 10vw, 180px);
+  font-weight: 100;
+  color: #f3f3f3;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+
+.note {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1;
+}
+
+.note span {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 400;
+}
+
+.item {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.sizeL,
+.sizeS {
+  max-width: 720px;
+}
+
+.tag {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.figure {
+  line-height: 0;
+  background: var(--bg-plane);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.img:hover {
+  opacity: 0.86;
+}
+
+.caption {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #555555;
+  max-width: 400px;
+  letter-spacing: 0.02em;
+}
+
+.credit {
+  font-size: 10px;
+  color: var(--gray);
+  margin-top: -10px;
+  letter-spacing: 0.08em;
+}
+
+.spreadHero .sizeL { grid-column: 1 / 9; }
+.spreadHero .sizeS { grid-column: 8 / 13; margin-top: 140px; margin-left: auto; }
+
+.spreadCinema .sizeL { grid-column: 5 / 13; margin-left: auto; }
+.spreadCinema .sizeS { grid-column: 1 / 6; margin-top: 100px; }
+
+.spreadSplit .sizeL { grid-column: 2 / 9; }
+.spreadSplit .sizeS { grid-column: 9 / 13; align-self: end; margin-left: auto; }
+
+.spreadSplitRev .sizeL { grid-column: 5 / 12; margin-left: auto; }
+.spreadSplitRev .sizeS { grid-column: 1 / 5; align-self: end; }
+
+.spreadStagger .sizeL { grid-column: 3 / 11; margin-left: auto; }
+.spreadStagger .sizeS { grid-column: 1 / 6; margin-top: -60px; }
+
+.spreadBand .sizeL { grid-column: 1 / 13; margin: 0 auto; }
+.spreadBand .sizeS { grid-column: 8 / 12; margin-top: 60px; margin-left: auto; }
+
+.spreadFlow .sizeL { grid-column: 1 / 8; }
+.spreadFlow .sizeS { grid-column: 8 / 13; margin-left: auto; }
+
+.spreadFlowRev .sizeL { grid-column: 6 / 13; margin-left: auto; }
+.spreadFlowRev .sizeS { grid-column: 1 / 6; }
+
+.spreadDetach .sizeL { grid-column: 1 / 7; }
+.spreadDetach .sizeS { grid-column: 8 / 13; margin-top: 80px; margin-left: auto; }
+
+.spreadContrast .sizeL { grid-column: 2 / 11; margin: 0 auto; }
+.spreadContrast .sizeS { grid-column: 9 / 13; margin-top: 40px; margin-left: auto; }
+
+.spreadPackage .sizeL { grid-column: 5 / 13; margin-left: auto; }
+.spreadPackage .sizeS { grid-column: 1 / 6; align-self: center; }
+
+.spreadFinale .sizeL { grid-column: 3 / 11; margin: 0 auto; }
+.spreadFinale .sizeS { grid-column: 1 / 6; margin-top: 120px; }
+
+.contact {
+  padding: 120px 0;
+  border-top: 1px solid var(--line);
+}
+
+@media screen and (max-width: 1024px) {
+  .document { padding: 80px 40px; }
+  .spread { gap: 80px 30px; }
+}
+
+@media screen and (max-width: 768px) {
+  .document { padding: 60px 24px; }
+  .spread {
+    grid-template-columns: 1fr;
+    gap: 80px;
+    padding: 100px 0;
+  }
+  .sizeL,
+  .sizeS {
+    grid-column: 1 / -1 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  .number {
+    font-size: 80px;
+    top: 0;
+    right: 0;
+  }
+  .note {
+    top: 20px;
+  }
+  .caption {
+    max-width: 100%;
+  }
+}
+

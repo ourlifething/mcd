@@ -43,13 +43,13 @@ export default function Home() {
         >
           <span
             style={{
-              fontSize: "13px",
+              fontSize: "24px",
               letterSpacing: "0.15em",
               color: "#333",
-              fontWeight: "400",
+              fontWeight: "800",
             }}
           >
-            MCGDESIGN
+            MA.
           </span>
         </header>
 

@@ -14,7 +14,7 @@ export default function Header() {
           width={100}
           height={100}
         /> */}
-        <h1>MCG DESIGN</h1>
+        <h1>MA.</h1>
       </Link>
       {/* <div className={styles["header-title"]}> */}
         {/* <h1>MCG DESIGN</h1> */}
