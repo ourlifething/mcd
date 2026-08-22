@@ -59,11 +59,7 @@
 }
 
 .note span {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gray);
-  font-weight: 400;
+  display: none;
 }
 
 .item {
@@ -91,7 +87,8 @@
 
 .figure {
   line-height: 0;
-  background: var(--bg-plane);
+  padding-top: 40px;
+  /* background: var(--bg-plane); */
 }
 
 .img {
@@ -187,9 +184,13 @@
   }
   .note {
     top: 20px;
+    display: none;
   }
   .caption {
     max-width: 100%;
   }
+  /* .tag {
+    display: none;
+  } */
 }
 
